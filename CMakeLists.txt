@@ -172,6 +172,9 @@ set_target_properties( plugin_ros_sonar
 #    ${PROJECT_SOURCE_DIR}/plugins
 #)
 
+catkin_install_python(PROGRAMS src/takeoff.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 install(DIRECTORY bin
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
