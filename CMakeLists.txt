@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2.2)
-project(sjtu_drone)
+project(Final-year-project)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -46,14 +46,14 @@ catkin_package(
 add_library( plugin_ros_init SHARED
     src/plugin_ros_init.cpp
 )
-target_link_libraries( plugin_ros_init 
+target_link_libraries( plugin_ros_init
    ${catkin_LIBRARIES}
    ${GAZEBO_LIBRARIES}
    ${OGRE_LIBRARY_DIRS}
 )
 
 set_target_properties( plugin_ros_init
-    PROPERTIES 
+    PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY
     ${PROJECT_SOURCE_DIR}/plugins
 )
@@ -72,7 +72,7 @@ target_link_libraries( plugin_drone
 )
 
 set_target_properties( plugin_drone
-    PROPERTIES 
+    PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY
     ${PROJECT_SOURCE_DIR}/plugins
 )
@@ -110,12 +110,12 @@ target_link_libraries( plugin_ros_cam
 )
 
 set_target_properties( plugin_ros_cam
-    PROPERTIES 
+    PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY
     ${PROJECT_SOURCE_DIR}/plugins
 )
 
-################# 5. A program using the keyboard to control the quadrotor #####  
+################# 5. A program using the keyboard to control the quadrotor #####
 set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
