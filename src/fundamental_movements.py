@@ -5,7 +5,7 @@ from geometry_msgs.msg import Twist
 
 
 def takeoff():
-    pub = rospy.Publisher("drone/takeoff", Empty, queue_size=10)  # node is publishing to the topic "takeoff" using
+    pub = rospy.Publisher("drone/takeoff", Empty, queue_size=1)  # node is publishing to the topic "takeoff" using
     # empty type
     rate = rospy.Rate(10)  # 10hz
     ctrl_c = False
@@ -41,11 +41,25 @@ def move_straight():
             rate.sleep()
 
 
+def land():
+    pub = rospy.Publisher("drone/land", Empty, queue_size=1)
+    rate = rospy.Rate(10)
+    ctrl_c = False
+    while not ctrl_c:
+        connections = pub.get_num_connections()
+        if connections > 0:
+            pub.publish((Empty()))
+            ctrl_c = True
+        else:
+            rate.sleep()
+
+
 if __name__ == '__main__':
     try:
         rospy.init_node('drone',
                         anonymous=True)  # initiates the node and gives it a name to communicate with the ROS master
         takeoff()
         move_straight()
+        land()
     except rospy.ROSInterruptException:
         pass
