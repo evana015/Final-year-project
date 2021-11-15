@@ -42,7 +42,7 @@ catkin_package(
    CATKIN_DEPENDS roscpp rospy image_transport std_msgs sensor_msgs geometry_msgs message_runtime gazebo_ros
 )
 
-catkin_install_python(PROGRAMS src/takeoff.py
+catkin_install_python(PROGRAMS src/fundamental_movements.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 install(DIRECTORY bin
