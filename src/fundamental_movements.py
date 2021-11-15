@@ -7,9 +7,14 @@ def takeoff():
     pub = rospy.Publisher("drone/takeoff", Empty, queue_size=10)  # node is publishing to the topic "takeoff" using
     # empty type
     rate = rospy.Rate(10)  # 10hz
-    while not rospy.is_shutdown():  # Checks for a Ctrl-C or any other termination
-        pub.publish(Empty())  # Publishes Empty "{}" to the takeoff rostopic
-        rate.sleep()  # sleeps just long enough to maintain  the desired rate to loop through
+    ctrl_c = False
+    while not ctrl_c:
+        connections = pub.get_num_connections()
+        if connections > 0:
+            pub.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
+            ctrl_c = True
+        else:
+            rate.sleep()    # sleeps just long enough to maintain  the desired rate to loop through
 
 
 def move_straight():
