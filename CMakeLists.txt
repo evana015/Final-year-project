@@ -45,6 +45,9 @@ catkin_package(
 catkin_install_python(PROGRAMS src/fundamental_movements.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+catkin_install_python(PROGRAMS src/flying_patterns.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 install(DIRECTORY bin
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
