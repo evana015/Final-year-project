@@ -64,6 +64,18 @@ def move_to(goal_x, goal_y, margin):
         r.sleep()
 
 
+def pts(boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a pts
+    waypoint_x = 0
+    waypoint_y = boundary_y
+    original_y = y
+    while waypoint_x < boundary_x:
+        move_to(waypoint_x, waypoint_y, 0.05)  # using half a unit as a base margin of error
+        waypoint_x += 1
+        move_to(waypoint_x, waypoint_y, 0.05)  # move across by one unit to make a parallel movement next time
+        if waypoint_y != original_y:
+            waypoint_y = original_y
+        else:
+            waypoint_y = boundary_y
 
 
 if __name__ == '__main__':
@@ -84,4 +96,4 @@ if __name__ == '__main__':
 
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-    move_to(5, 5, 0.05)
+    pts(5, 5)
