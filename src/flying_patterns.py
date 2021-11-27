@@ -47,20 +47,27 @@ if __name__ == '__main__':
     goal = Point()
     goal.x = 5
     goal.y = 5
+    margin_of_error = 0.05
 
     while not rospy.is_shutdown():
         inc_x = goal.x - x
         inc_y = goal.y - y
 
         angle_to_goal = atan2(inc_y, inc_x)
-        print("angle_to_goal", angle_to_goal)
-        print("theta", theta)
-        if abs(angle_to_goal - theta) > 0.1:
+        if (goal.x-margin_of_error) < x < (goal.x+margin_of_error) and\
+                (goal.y-margin_of_error) < y < (goal.y+margin_of_error):
+            speed.linear.x = 0.0
+            speed.angular.z = 0.0
+        elif abs(angle_to_goal - theta) > 0.1:
             speed.linear.x = 0.0
             speed.angular.z = 0.3
         else:
-            speed.linear.x = 0.5
-            speed.angular.z = 0.0
+            if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:
+                speed.linear.x = 0.1
+                speed.angular.z = 0.0
+            else:
+                speed.linear.x = 0.8
+                speed.angular.z = 0.0
 
         pub.publish(speed)
         r.sleep()
