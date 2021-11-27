@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <package>
-  <name>sjtu_drone</name>
+  <name>Final-year-project</name>
   <version>0.0.0</version>
   <description>The sjtu_drone package</description>
 
-  <maintainer email="dpzou@sjtu.edu.cn">dpzou</maintainer>
+  <maintainer email="evana015@googlemail.com">evana015</maintainer>
 
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
