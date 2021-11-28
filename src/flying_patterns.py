@@ -30,7 +30,7 @@ def turn(goal_x, goal_y, speed):
         elif -1.5 < theta < 0:
             speed.linear.x = 0.0
             speed.angular.z = 0.2
-        elif -3 <= theta < -1.5:
+        elif -3 < theta < -1.5:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
     elif goal_x >= 0 and goal_y < 0:  # x -y
@@ -50,7 +50,7 @@ def turn(goal_x, goal_y, speed):
         elif 0 < theta < 1.5:
             speed.linear.x = 0.0
             speed.angular.z = 0.2
-        elif -1.5 <= theta < 0:
+        elif -1.5 < theta < 0:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
     else:  # -x -y
@@ -60,7 +60,7 @@ def turn(goal_x, goal_y, speed):
         elif 1.5 < theta < 3:
             speed.linear.x = 0.0
             speed.angular.z = 0.2
-        elif 0 <= theta < 1.5:
+        elif 0 < theta < 1.5:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
     if speed.angular.z == 0.0:
@@ -165,4 +165,4 @@ if __name__ == '__main__':
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
     rate.sleep()  # sleep needed as previously it was reading as 0 0 as a first reading
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-    ess(3, 3)
+    ess(3, 3)  # TODO: increase standard margin of error
