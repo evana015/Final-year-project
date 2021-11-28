@@ -6,11 +6,6 @@ from std_msgs.msg import Empty
 from geometry_msgs.msg import Point, Twist, Pose
 from math import atan2
 
-x = 0.0
-y = 0.0
-theta = 0.0
-
-
 def newOdom(msg):
     global x
     global y
@@ -20,6 +15,58 @@ def newOdom(msg):
 
     rot_q = msg.orientation
     (roll, pitch, theta) = euler_from_quaternion([rot_q.x, rot_q.y, rot_q.z, rot_q.w])
+
+
+def turn(goal_x, goal_y, speed):
+    inc_x = goal_x - x
+    inc_y = goal_y - y
+    if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:  # edge case the drone misses the waypoint and cant turn around
+        speed.linear.x = 0.0
+        speed.angular.z = -0.2
+    elif goal_x >= 0 and goal_y >= 0:  # x y
+        if 1.5 < theta < 3:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+        elif -1.5 < theta < 0:
+            speed.linear.x = 0.0
+            speed.angular.z = 0.2
+        elif -3 <= theta < -1.5:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+    elif goal_x >= 0 and goal_y < 0:  # x -y
+        if 0 < theta < 1.5:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+        elif -3 < theta < -1.5:
+            speed.linear.x = 0.0
+            speed.angular.z = 0.2
+        elif 1.5 <= theta < 3:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+    elif goal_x < 0 and goal_y >= 0:  # -x y
+        if -1.5 < theta < -3:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+        elif 0 < theta < 1.5:
+            speed.linear.x = 0.0
+            speed.angular.z = 0.2
+        elif -1.5 <= theta < 0:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+    else:  # -x -y
+        if -1.5 < theta < 0:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+        elif 1.5 < theta < 3:
+            speed.linear.x = 0.0
+            speed.angular.z = 0.2
+        elif 0 <= theta < 1.5:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+    if speed.angular.z == 0.0:
+        speed.linear.x = 0.0
+        speed.angular.z = -0.2
+    return speed
 
 
 def move_to(goal_x, goal_y, margin):
@@ -33,7 +80,6 @@ def move_to(goal_x, goal_y, margin):
     goal.y = goal_y
 
     hovering = False
-
     while not hovering:
         inc_x = goal.x - x
         inc_y = goal.y - y
@@ -43,14 +89,10 @@ def move_to(goal_x, goal_y, margin):
                 (goal.y - margin) < y < (goal.y + margin):
             speed.linear.x = 0.0
             speed.angular.z = 0.0
+            rate.sleep()
             hovering = True
         elif abs(angle_to_goal - theta) > 0.1:
-            if angle_to_goal > 0:
-                speed.linear.x = 0.0
-                speed.angular.z = 0.2
-            else:
-                speed.linear.x = 0.0
-                speed.angular.z = -0.2
+            speed = turn(goal_x, goal_y, speed)
         else:
             if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:
                 speed.linear.x = 0.2
@@ -64,10 +106,11 @@ def move_to(goal_x, goal_y, margin):
 
 
 def pts(boundary_x, boundary_y):
-    waypoint_x = 0
-    waypoint_y = boundary_y
+    original_x = x
     original_y = y
-    while waypoint_x < boundary_x:
+    waypoint_x = x
+    waypoint_y = original_y + boundary_y
+    while waypoint_x < original_x + boundary_x:
         move_to(waypoint_x, waypoint_y, 0.05)  # using half a unit as a base margin of error
         waypoint_x += 1
         move_to(waypoint_x, waypoint_y, 0.05)  # move across by one unit to make a parallel movement next time
@@ -78,8 +121,10 @@ def pts(boundary_x, boundary_y):
 
 
 def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a ess
-    waypoint_x = 0
-    waypoint_y = 1
+    original_x = x
+    original_y = y
+    waypoint_x = x
+    waypoint_y = y + 1
     increment = 1
     hit_limit = False
     while not hit_limit:
@@ -89,15 +134,19 @@ def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will b
         print("next_move")
         move_to(waypoint_x, waypoint_y, 0.05)  # 1 1 # -1 -1
         increment += 1
-        if waypoint_y > 0:
+        if waypoint_y > original_y:
             waypoint_y = waypoint_y - increment
         else:
             waypoint_y = waypoint_y + increment
-        if abs(waypoint_y) > boundary_y or abs(waypoint_x) > boundary_x:
+        if waypoint_y > original_y + boundary_y or waypoint_x > original_x + boundary_x:
             hit_limit = True
 
 
 if __name__ == '__main__':
+    x = 0.0
+    y = 0.0
+    theta = 0.0
+
     rospy.init_node("speed_controller")
 
     # TODO: learn how to import this
@@ -114,6 +163,6 @@ if __name__ == '__main__':
             rate.sleep()  # sleeps just long enough to maintain  the desired rate to loop through
 
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
+    rate.sleep()  # sleep needed as previously it was reading as 0 0 as a first reading
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-    # ess(5, 5)
-    move_to(-2, -2, 0.05)
+    ess(3, 3)
