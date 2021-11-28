@@ -6,7 +6,6 @@ from std_msgs.msg import Empty
 from geometry_msgs.msg import Point, Twist, Pose
 from math import atan2
 
-
 x = 0.0
 y = 0.0
 theta = 0.0
@@ -24,6 +23,7 @@ def newOdom(msg):
 
 
 def move_to(goal_x, goal_y, margin):
+    print("moving to waypoint(", goal_x, ",", goal_y, ")")
     speed = Twist()
 
     r = rospy.Rate(4)
@@ -39,22 +39,21 @@ def move_to(goal_x, goal_y, margin):
         inc_y = goal.y - y
 
         angle_to_goal = atan2(inc_y, inc_x)
-
         if (goal.x - margin) < x < (goal.x + margin) and \
                 (goal.y - margin) < y < (goal.y + margin):
             speed.linear.x = 0.0
             speed.angular.z = 0.0
             hovering = True
-        elif abs(angle_to_goal - theta) > 0.05:
-            if (angle_to_goal - theta) > 0:
+        elif abs(angle_to_goal - theta) > 0.1:
+            if angle_to_goal > 0:
                 speed.linear.x = 0.0
-                speed.angular.z = 0.3
+                speed.angular.z = 0.2
             else:
                 speed.linear.x = 0.0
-                speed.angular.z = -0.3
+                speed.angular.z = -0.2
         else:
             if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:
-                speed.linear.x = 0.1
+                speed.linear.x = 0.2
                 speed.angular.z = 0.0
             else:
                 speed.linear.x = 0.5
@@ -64,7 +63,7 @@ def move_to(goal_x, goal_y, margin):
         r.sleep()
 
 
-def pts(boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a pts
+def pts(boundary_x, boundary_y):
     waypoint_x = 0
     waypoint_y = boundary_y
     original_y = y
@@ -78,22 +77,43 @@ def pts(boundary_x, boundary_y):  # generate a sequence of waypoints that will b
             waypoint_y = boundary_y
 
 
+def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a ess
+    waypoint_x = 0
+    waypoint_y = 1
+    increment = 1
+    hit_limit = False
+    while not hit_limit:
+        print("next_move")
+        move_to(waypoint_x, waypoint_y, 0.05)  # 0 1 # 1 -1
+        waypoint_x = waypoint_y
+        print("next_move")
+        move_to(waypoint_x, waypoint_y, 0.05)  # 1 1 # -1 -1
+        increment += 1
+        if waypoint_y > 0:
+            waypoint_y = waypoint_y - increment
+        else:
+            waypoint_y = waypoint_y + increment
+        if abs(waypoint_y) > boundary_y or abs(waypoint_x) > boundary_x:
+            hit_limit = True
+
+
 if __name__ == '__main__':
     rospy.init_node("speed_controller")
 
-    # # TODO: learn how to import this
-    # pub = rospy.Publisher("drone/takeoff", Empty, queue_size=1)  # node is publishing to the topic "takeoff" using
-    # # empty type
-    # rate = rospy.Rate(10)  # 10hz
-    # ctrl_c = False
-    # while not ctrl_c:
-    #     connections = pub.get_num_connections()
-    #     if connections > 0:
-    #         pub.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
-    #         ctrl_c = True
-    #     else:
-    #         rate.sleep()  # sleeps just long enough to maintain  the desired rate to loop through
+    # TODO: learn how to import this
+    pub = rospy.Publisher("drone/takeoff", Empty, queue_size=1)  # node is publishing to the topic "takeoff" using
+    # empty type
+    rate = rospy.Rate(10)  # 10hz
+    ctrl_c = False
+    while not ctrl_c:
+        connections = pub.get_num_connections()
+        if connections > 0:
+            pub.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
+            ctrl_c = True
+        else:
+            rate.sleep()  # sleeps just long enough to maintain  the desired rate to loop through
 
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-    pts(5, 5)
+    # ess(5, 5)
+    move_to(-2, -2, 0.05)
