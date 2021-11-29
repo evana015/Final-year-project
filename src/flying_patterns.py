@@ -130,10 +130,8 @@ def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will b
     increment = 1
     hit_limit = False
     while not hit_limit:
-        print("next_move")
         move_to(waypoint_x, waypoint_y, 0.1)  # 0 1 # 1 -1
         waypoint_x = waypoint_y
-        print("next_move")
         move_to(waypoint_x, waypoint_y, 0.1)  # 1 1 # -1 -1
         increment += 1
         if waypoint_y > original_y:
@@ -166,17 +164,16 @@ if __name__ == '__main__':
     rospy.init_node("speed_controller")
 
     # TODO: learn how to import this
-    pub = rospy.Publisher("drone/takeoff", Empty, queue_size=1)  # node is publishing to the topic "takeoff" using
-    # empty type
-    rate = rospy.Rate(10)  # 10hz
+    pub = rospy.Publisher("drone/takeoff", Empty, queue_size=1)
+    rate = rospy.Rate(10)
     ctrl_c = False
     while not ctrl_c:
         connections = pub.get_num_connections()
         if connections > 0:
-            pub.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
+            pub.publish((Empty()))
             ctrl_c = True
         else:
-            rate.sleep()  # sleeps just long enough to maintain  the desired rate to loop through
+            rate.sleep()
 
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
     rate.sleep()  # sleep needed as previously it was reading as 0 0 as a first reading
