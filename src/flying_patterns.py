@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+import math
 
 import rospy
 from tf.transformations import euler_from_quaternion
 from std_msgs.msg import Empty
 from geometry_msgs.msg import Point, Twist, Pose
-from math import atan2
+from math import atan2, sin, cos, radians
+
 
 def newOdom(msg):
     global x
@@ -23,7 +25,7 @@ def turn(goal_x, goal_y, speed):
     if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:  # edge case the drone misses the waypoint and cant turn around
         speed.linear.x = 0.0
         speed.angular.z = -0.2
-    elif goal_x >= 0 and goal_y >= 0:  # x y
+    elif goal_x-x >= 0 and goal_y-y >= 0:  # x y
         if 1.5 < theta < 3:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
@@ -33,7 +35,7 @@ def turn(goal_x, goal_y, speed):
         elif -3 < theta < -1.5:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
-    elif goal_x >= 0 and goal_y < 0:  # x -y
+    elif goal_x-x >= 0 and goal_y-y < 0:  # x -y
         if 0 < theta < 1.5:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
@@ -43,7 +45,7 @@ def turn(goal_x, goal_y, speed):
         elif 1.5 <= theta < 3:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
-    elif goal_x < 0 and goal_y >= 0:  # -x y
+    elif goal_x-x < 0 and goal_y-y >= 0:  # -x y
         if -1.5 < theta < -3:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
@@ -111,9 +113,9 @@ def pts(boundary_x, boundary_y):
     waypoint_x = x
     waypoint_y = original_y + boundary_y
     while waypoint_x < original_x + boundary_x:
-        move_to(waypoint_x, waypoint_y, 0.05)  # using half a unit as a base margin of error
+        move_to(waypoint_x, waypoint_y, 0.1)  # using half a unit as a base margin of error
         waypoint_x += 1
-        move_to(waypoint_x, waypoint_y, 0.05)  # move across by one unit to make a parallel movement next time
+        move_to(waypoint_x, waypoint_y, 0.1)  # move across by one unit to make a parallel movement next time
         if waypoint_y != original_y:
             waypoint_y = original_y
         else:
@@ -129,10 +131,10 @@ def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will b
     hit_limit = False
     while not hit_limit:
         print("next_move")
-        move_to(waypoint_x, waypoint_y, 0.05)  # 0 1 # 1 -1
+        move_to(waypoint_x, waypoint_y, 0.1)  # 0 1 # 1 -1
         waypoint_x = waypoint_y
         print("next_move")
-        move_to(waypoint_x, waypoint_y, 0.05)  # 1 1 # -1 -1
+        move_to(waypoint_x, waypoint_y, 0.1)  # 1 1 # -1 -1
         increment += 1
         if waypoint_y > original_y:
             waypoint_y = waypoint_y - increment
@@ -140,6 +142,20 @@ def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will b
             waypoint_y = waypoint_y + increment
         if waypoint_y > original_y + boundary_y or waypoint_x > original_x + boundary_x:
             hit_limit = True
+
+
+def ss(radius):
+    radians_needed = [0, radians(60), radians(120), radians(180), radians(240), radians(300)]
+    original_x = x
+    original_y = y
+    n = 0
+    for i in range(0, 3):  # 3 triangle movements to perform
+        move_to(original_x + (radius * sin(radians_needed[n])),
+                original_y + (radius * cos(radians_needed[n])), 0.1)
+        move_to(original_x + (radius * sin(radians_needed[n + 1])),
+                original_y + (radius * cos(radians_needed[n + 1])), 0.1)
+        move_to(original_x, original_y, 0.1)
+        n += 2
 
 
 if __name__ == '__main__':
@@ -165,4 +181,4 @@ if __name__ == '__main__':
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
     rate.sleep()  # sleep needed as previously it was reading as 0 0 as a first reading
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-    ess(3, 3)  # TODO: increase standard margin of error
+    ss(2)
