@@ -121,7 +121,7 @@ def cls(boundary_x, boundary_y):
         if waypoint_y != original_y:
             waypoint_y = original_y
         else:
-            waypoint_y = boundary_y
+            waypoint_y = original_y + boundary_y
 
 
 def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a ess
