@@ -107,7 +107,7 @@ def move_to(goal_x, goal_y, margin):
         r.sleep()
 
 
-def pts(boundary_x, boundary_y):
+def cls(boundary_x, boundary_y):
     original_x = x
     original_y = y
     waypoint_x = x
@@ -121,7 +121,7 @@ def pts(boundary_x, boundary_y):
         if waypoint_y != original_y:
             waypoint_y = original_y
         else:
-            waypoint_y = boundary_y
+            waypoint_y = original_y + boundary_y
 
 
 def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a ess
@@ -185,4 +185,4 @@ if __name__ == '__main__':
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
     rate.sleep()  # sleep needed as previously it was reading as 0 0 as a first reading
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-    pts(4, 4)
+    cls(4, 4)
