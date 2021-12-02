@@ -9,7 +9,7 @@ vertices = [
     (0, 0),
 ]
 
-codes = []
+codes = [Path.MOVETO]
 for i in range(0, len(vertices)):  # for the amount of vertices there are draw lines to them in order
     codes.append(Path.LINETO)
 path = Path(vertices, codes)
