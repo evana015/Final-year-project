@@ -113,9 +113,11 @@ def pts(boundary_x, boundary_y):
     waypoint_x = x
     waypoint_y = original_y + boundary_y
     while waypoint_x < original_x + boundary_x:
-        move_to(waypoint_x, waypoint_y, 0.1)  # using a unit as a base margin of error
+        move_to(waypoint_x, waypoint_y, 0.05)  # using a unit as a base margin of error
+        print("Pose Reading: x= ", x, " y= ", y)
         waypoint_x += 1
-        move_to(waypoint_x, waypoint_y, 0.1)  # move across by one unit to make a parallel movement next time
+        move_to(waypoint_x, waypoint_y, 0.05)  # move across by one unit to make a parallel movement next time
+        print("Pose Reading: x= ", x, " y= ", y)
         if waypoint_y != original_y:
             waypoint_y = original_y
         else:
@@ -131,8 +133,10 @@ def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will b
     hit_limit = False
     while not hit_limit:
         move_to(waypoint_x, waypoint_y, 0.1)  # 0 1 # 1 -1
+        print("Pose Reading: x= ", x, " y= ", y)
         waypoint_x = waypoint_y
         move_to(waypoint_x, waypoint_y, 0.1)  # 1 1 # -1 -1
+        print("Pose Reading: x= ", x, " y= ", y)
         increment += 1
         if waypoint_y > original_y:
             waypoint_y = waypoint_y - increment
@@ -150,9 +154,12 @@ def ss(radius):
     for i in range(0, 3):  # 3 triangle movements to perform
         move_to(original_x + (radius * sin(radians_needed[n])),
                 original_y + (radius * cos(radians_needed[n])), 0.1)
+        print("Pose Reading: x= ", x, " y= ", y)
         move_to(original_x + (radius * sin(radians_needed[n + 1])),
                 original_y + (radius * cos(radians_needed[n + 1])), 0.1)
+        print("Pose Reading: x= ", x, " y= ", y)
         move_to(original_x, original_y, 0.1)
+        print("Pose Reading: x= ", x, " y= ", y)
         n += 2
 
 
@@ -178,4 +185,4 @@ if __name__ == '__main__':
     sub = rospy.Subscriber("/drone/gt_pose", Pose, newOdom)
     rate.sleep()  # sleep needed as previously it was reading as 0 0 as a first reading
     pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
-    ss(2)
+    pts(4, 4)
