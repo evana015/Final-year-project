@@ -113,7 +113,7 @@ def pts(boundary_x, boundary_y):
     waypoint_x = x
     waypoint_y = original_y + boundary_y
     while waypoint_x < original_x + boundary_x:
-        move_to(waypoint_x, waypoint_y, 0.1)  # using half a unit as a base margin of error
+        move_to(waypoint_x, waypoint_y, 0.1)  # using a unit as a base margin of error
         waypoint_x += 1
         move_to(waypoint_x, waypoint_y, 0.1)  # move across by one unit to make a parallel movement next time
         if waypoint_y != original_y:
