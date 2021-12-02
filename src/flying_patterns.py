@@ -25,7 +25,7 @@ def turn(goal_x, goal_y, speed):
     if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:  # edge case the drone misses the waypoint and cant turn around
         speed.linear.x = 0.0
         speed.angular.z = -0.2
-    elif goal_x-x >= 0 and goal_y-y >= 0:  # x y
+    elif goal_x - x >= 0 and goal_y - y >= 0:  # x y
         if 1.5 < theta < 3:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
@@ -35,7 +35,7 @@ def turn(goal_x, goal_y, speed):
         elif -3 < theta < -1.5:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
-    elif goal_x-x >= 0 and goal_y-y < 0:  # x -y
+    elif goal_x - x >= 0 and goal_y - y < 0:  # x -y
         if 0 < theta < 1.5:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
@@ -45,7 +45,7 @@ def turn(goal_x, goal_y, speed):
         elif 1.5 <= theta < 3:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
-    elif goal_x-x < 0 and goal_y-y >= 0:  # -x y
+    elif goal_x - x < 0 and goal_y - y >= 0:  # -x y
         if -1.5 < theta < -3:
             speed.linear.x = 0.0
             speed.angular.z = -0.2
@@ -114,10 +114,10 @@ def pts(boundary_x, boundary_y):
     waypoint_y = original_y + boundary_y
     while waypoint_x < original_x + boundary_x:
         move_to(waypoint_x, waypoint_y, 0.05)  # using a unit as a base margin of error
-        print("Pose Reading: x= ", x, " y= ", y)
+        print("Pose Reading: (", x, ",", y, ")")
         waypoint_x += 1
         move_to(waypoint_x, waypoint_y, 0.05)  # move across by one unit to make a parallel movement next time
-        print("Pose Reading: x= ", x, " y= ", y)
+        print("Pose Reading: (", x, ",", y, ")")
         if waypoint_y != original_y:
             waypoint_y = original_y
         else:
@@ -133,10 +133,10 @@ def ess(boundary_x, boundary_y):  # generate a sequence of waypoints that will b
     hit_limit = False
     while not hit_limit:
         move_to(waypoint_x, waypoint_y, 0.1)  # 0 1 # 1 -1
-        print("Pose Reading: x= ", x, " y= ", y)
+        print("Pose Reading: (", x, ",", y, ")")
         waypoint_x = waypoint_y
         move_to(waypoint_x, waypoint_y, 0.1)  # 1 1 # -1 -1
-        print("Pose Reading: x= ", x, " y= ", y)
+        print("Pose Reading: (", x, ",", y, ")")
         increment += 1
         if waypoint_y > original_y:
             waypoint_y = waypoint_y - increment
@@ -154,12 +154,12 @@ def ss(radius):
     for i in range(0, 3):  # 3 triangle movements to perform
         move_to(original_x + (radius * sin(radians_needed[n])),
                 original_y + (radius * cos(radians_needed[n])), 0.1)
-        print("Pose Reading: x= ", x, " y= ", y)
+        print("Pose Reading: (", x, ",", y, ")")
         move_to(original_x + (radius * sin(radians_needed[n + 1])),
                 original_y + (radius * cos(radians_needed[n + 1])), 0.1)
-        print("Pose Reading: x= ", x, " y= ", y)
+        print("Pose Reading: (", x, ",", y, ")")
         move_to(original_x, original_y, 0.1)
-        print("Pose Reading: x= ", x, " y= ", y)
+        print("Pose Reading: (", x, ",", y, ")")
         n += 2
 
 
