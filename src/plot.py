@@ -3,6 +3,7 @@ from matplotlib.path import Path
 import matplotlib.patches as patches
 
 vertices = [
+    (0, 0),
     (0, 1),
     (1, 1),
     (1, 0),
