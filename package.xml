@@ -4,11 +4,11 @@
   <version>0.0.0</version>
   <description>The sjtu_drone package</description>
 
-  <maintainer email="evana015@googlemail.com">evana015</maintainer>
+    <maintainer email="evana015@googlemail.com">evana015</maintainer>
 
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>GPLv2</license>
+  <license>GPLv3</license>
 
 
 
@@ -20,6 +20,9 @@
   <build_depend>sensor_msgs</build_depend>
   <build_depend>image_transport</build_depend>
   <build_depend>message_generation</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>gazebo_plugins</build_depend>
+
 
   <run_depend>roscpp</run_depend>
   <run_depend>rospy</run_depend>
@@ -29,10 +32,12 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>message_runtime</run_depend>
   <run_depend>gazebo_ros</run_depend>
-  <export>
-  <gazebo_ros
-        plugin_path="${prefix}/plugins"
-        gazebo_model_path="${prefix}/models"
-        gazebo_media_path="${prefix}" />
-  </export>
+  <run_depend>gazebo_plugins</run_depend>
+  <run_depend>teleop_twist_keyboard</run_depend>
+  <run_depend>xterm</run_depend>
+
+<export>
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
+</export>
+
 </package>

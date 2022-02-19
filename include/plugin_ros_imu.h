@@ -65,7 +65,7 @@
 #endif
 
 #include "gazebo/common/Plugin.hh"
-#include "ignition/math4/ignition/math.hh"
+
 #include <ros/ros.h>
 #include <boost/thread/mutex.hpp>
 #include <sensor_msgs/Imu.h>
@@ -128,12 +128,12 @@ namespace gazebo
       common::Time update_period;
 
       /// \brief save current body/physics state
-      ignition::math::Quaternion orientation;
-      ignition::math::Vector3d velocity;
-      ignition::math::Vector3d accel;
-      ignition::math::Vector3d rate;
-      ignition::math::Vector3d gravity;
-      ignition::math::Vector3d gravity_body;
+      math::Quaternion orientation;
+      math::Vector3 velocity;
+      math::Vector3 accel;
+      math::Vector3 rate;
+      math::Vector3 gravity;
+      math::Vector3 gravity_body;
 
       /// \brief Gaussian noise generator
       double GaussianKernel(double mu,double sigma);

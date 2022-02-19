@@ -4,7 +4,7 @@
 #include "gazebo/gazebo.hh"
 #include "gazebo/physics/physics.hh"
 #include "gazebo/common/Events.hh"
-#include "ignition/math4/ignition/math.hh"
+
 #include <ros/callback_queue.h>
 #include <ros/ros.h>
 
@@ -83,8 +83,10 @@ private:
  
  
   ros::Time state_stamp;
-  ignition::math::Pose3d pose;
-  ignition::math::Vector3d euler, velocity, acceleration, angular_velocity, position;
+  // TODO: Change for pointers and init in constructor
+  ignition::math::v6::Pose3<double> pose;
+  ignition::math::v6::Vector3<double> euler;
+  ignition::math::v6::Vector3<double> velocity, acceleration, angular_velocity, position;
 
   std::string link_name_;
   std::string cmd_normal_topic_;
@@ -113,7 +115,7 @@ private:
     PIDController pos_z;
   } controllers_;
 
-  ignition::math::Vector3d inertia;
+  ignition::math::v6::Vector3<double> inertia;
   double mass;
 
   /// \brief save last_time
