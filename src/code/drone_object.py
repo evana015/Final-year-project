@@ -1,29 +1,26 @@
 #!/usr/bin/env python
 import rospy
+from geometry_msgs.msg import Pose, Twist
 from tf.transformations import euler_from_quaternion
 
 
 class Drone:
-    def __init__(self, name, set_rate, publishers, subscribers, x, y, z):
-        self.name = name
+    # Initializer for the drone:
+    def __init__(self, name, set_rate):
+        # Initiate the drone via rospy with the node having the given name
+        self.name = rospy.init_node(self.name)
+        # Setting the rate to what is dictated by the second parameter
         self.rate = rospy.rate(set_rate)
-        self.publishers = [].append(publishers)
-        self.subscribers = [].append(subscribers)
-        self.x = x
-        self.y = y
-        self.z = z
-        self.theta = 0
-        self.roll = 0
-        self.pitch = 0
-
-    def initialize(self):
-        return None
-
-    def publish(self):
-        return None
-
-    def subscribe(self):
-        return None
+        # Setting default location data
+        self.x = 0
+        self.y = 0
+        self.z = 0
+        self.theta = 0.0
+        self.roll = 0.0
+        self.pitch = 0.0
+        # Publishers and Subscribers will be set with the following set as standard
+        self.odom_sub = rospy.Subscriber("/drone/gt_pose", Pose, self.odom)
+        self.movement_pub = rospy.Publisher("/cmd_vel", Twist, queue_size=1)
 
     def odom(self, msg):
         self.x = msg.position.x
