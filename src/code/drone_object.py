@@ -40,7 +40,6 @@ class Drone:
     # takeoff_or_land behave as you would expect from the name
     # Specifically the drone will publish a message to the topic "drone/takeoff" or "drone/land" with an Empty msg
     # The method will take a "choice" parameter which will determine which publisher to use
-
     def takeoff_or_land(self, choice):
         ctrl_c = False
         if choice == "takeoff":
@@ -55,6 +54,10 @@ class Drone:
             else:
                 self.rate.sleep()  # sleeps just long enough to maintain the desired rate to loop through
 
+    # turn works in tandem with move_to to make the best decision of which direction to turn
+    # (clockwise or anti-clockwise)
+    # The method have if-else cases comparing the waypoint it wants to direct itself at and its current orientation
+    # The cases are split into the 4 quadrants of a 2D axis
     def turn(self, goal_x, goal_y, speed):
         inc_x = goal_x - self.x
         inc_y = goal_y - self.y
@@ -106,6 +109,10 @@ class Drone:
             speed.angular.z = -0.2
         return speed
 
+    # move_to takes the co-ordinate of where the drone is going to and a margin of error that is allowed which gives
+    # the ability to adjust between accuracy and speed as increased accuracy requires more time to achieve The goal x
+    # and y are compared against the drones current location data provided by the odometer to determine the
+    # direction it needs to go as well if it has reached its destination
     def move_to(self, goal_x, goal_y, margin):
         print("moving to waypoint(", goal_x, ",", goal_y, ")")
         speed = Twist()
@@ -140,7 +147,6 @@ class Drone:
 
             self.movement_pub.publish(speed)
             r.sleep()
-
 
     def get_x(self):
         return self.x
