@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 import rospy
-from geometry_msgs.msg import Pose, Twist
+from std_msgs.msg import Empty
+from geometry_msgs.msg import Pose, Twist, Point
 from tf.transformations import euler_from_quaternion
+from math import atan2, sin, cos, radians
 
 
 class Drone:
     # Initializer for the drone:
     def __init__(self, name, set_rate):
         # Initiate the drone via rospy with the node having the given name
-        self.name = rospy.init_node(self.name)
+        self.name = rospy.init_node(name)
         # Setting the rate to what is dictated by the second parameter
-        self.rate = rospy.rate(set_rate)
+        self.rate = rospy.Rate(set_rate)
         # Setting default location data
         self.x = 0
         self.y = 0
@@ -30,6 +32,104 @@ class Drone:
         rot_q = msg.orientation
         (self.roll, self.pitch, self.theta) = euler_from_quaternion([rot_q.x, rot_q.y, rot_q.z, rot_q.w])
 
+    def takeoff(self):
+        pub = rospy.Publisher("drone/takeoff", Empty, queue_size=1)  # node is publishing to the topic "takeoff" using
+        # empty type
+        ctrl_c = False
+        while not ctrl_c:
+            connections = pub.get_num_connections()
+            if connections > 0:
+                pub.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
+                ctrl_c = True
+            else:
+                self.rate.sleep()  # sleeps just long enough to maintain  the desired rate to loop through
+
+    def turn(self, goal_x, goal_y, speed):
+        inc_x = goal_x - self.x
+        inc_y = goal_y - self.y
+        if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:  # edge case the drone misses the waypoint and cant turn around
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+        elif goal_x - self.x >= 0 and goal_y - self.y >= 0:  # x y
+            if 1.5 < self.theta < 3:
+                speed.linear.x = 0.0
+                speed.angular.z = -0.2
+            elif -1.5 < self.theta < 0:
+                speed.linear.x = 0.0
+                speed.angular.z = 0.2
+            elif -3 < self.theta < -1.5:
+                speed.linear.x = 0.0
+                speed.angular.z = 0.2
+        elif goal_x - self.x >= 0 and goal_y - self.y < 0:  # x -y
+            if 0 < self.theta < 1.5:
+                speed.linear.x = 0.0
+                speed.angular.z = -0.2
+            elif -3 < self.theta < -1.5:
+                speed.linear.x = 0.0
+                speed.angular.z = 0.2
+            elif 1.5 <= self.theta < 3:
+                speed.linear.x = 0.0
+                speed.angular.z = -0.2
+        elif goal_x - self.x < 0 and goal_y - self.y >= 0:  # -x y
+            if -1.5 < self.theta < -3:
+                speed.linear.x = 0.0
+                speed.angular.z = -0.2
+            elif 0 < self.theta < 1.5:
+                speed.linear.x = 0.0
+                speed.angular.z = 0.2
+            elif -1.5 < self.theta < 0:
+                speed.linear.x = 0.0
+                speed.angular.z = -0.2
+        else:  # -x -y
+            if -1.5 < self.theta < 0:
+                speed.linear.x = 0.0
+                speed.angular.z = -0.2
+            elif 1.5 < self.theta < 3:
+                speed.linear.x = 0.0
+                speed.angular.z = 0.2
+            elif 0 < self.theta < 1.5:
+                speed.linear.x = 0.0
+                speed.angular.z = -0.2
+        if speed.angular.z == 0.0:
+            speed.linear.x = 0.0
+            speed.angular.z = -0.2
+        return speed
+
+    def move_to(self, goal_x, goal_y, margin):
+        print("moving to waypoint(", goal_x, ",", goal_y, ")")
+        speed = Twist()
+
+        r = rospy.Rate(4)
+
+        goal = Point()
+        goal.x = goal_x
+        goal.y = goal_y
+
+        hovering = False
+        while not hovering:
+            inc_x = goal.x - self.x
+            inc_y = goal.y - self.y
+
+            angle_to_goal = atan2(inc_y, inc_x)
+            if (goal.x - margin) < self.x < (goal.x + margin) and \
+                    (goal.y - margin) < self.y < (goal.y + margin):
+                speed.linear.x = 0.0
+                speed.angular.z = 0.0
+                self.rate.sleep()
+                hovering = True
+            elif abs(angle_to_goal - self.theta) > 0.1:
+                speed = self.turn(goal_x, goal_y, speed)
+            else:
+                if abs(inc_x) < 0.5 and abs(inc_y) < 0.5:
+                    speed.linear.x = 0.2
+                    speed.angular.z = 0.0
+                else:
+                    speed.linear.x = 0.5
+                    speed.angular.z = 0.0
+
+            self.movement_pub.publish(speed)
+            r.sleep()
+
     def get_x(self):
         return self.x
 
@@ -47,3 +147,8 @@ class Drone:
 
     def get_theta(self):
         return self.theta
+
+
+test_drone = Drone("Parrot", 10)
+test_drone.takeoff()
+test_drone.move_to(4, 4, 0.5)
