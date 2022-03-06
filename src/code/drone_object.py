@@ -148,6 +148,8 @@ class Drone:
             self.movement_pub.publish(speed)
             r.sleep()
 
+    # TODO the descriptions for the flying pattern movements then remove the other two programs as they will be legacy
+
     def cls(self, boundary_x, boundary_y):
         original_x = self.x
         original_y = self.y
@@ -185,17 +187,17 @@ class Drone:
             if waypoint_y > original_y + boundary_y or waypoint_x > original_x + boundary_x:
                 hit_limit = True
 
-    def ss(self, radius):
+    def ss(self, radius):  # TODO use a boundary parameter work out radius from it and continue the same
         radians_needed = [0, radians(60), radians(120), radians(180), radians(240), radians(300)]
         original_x = self.x
         original_y = self.y
         n = 0
         for i in range(0, 3):  # 3 triangle movements to perform
             self.move_to(original_x + (radius * sin(radians_needed[n])),
-                    original_y + (radius * cos(radians_needed[n])), 0.05)
+                         original_y + (radius * cos(radians_needed[n])), 0.05)
             print("Pose Reading: (", self.x, ",", self.y, ")")
             self.move_to(original_x + (radius * sin(radians_needed[n + 1])),
-                    original_y + (radius * cos(radians_needed[n + 1])), 0.05)
+                         original_y + (radius * cos(radians_needed[n + 1])), 0.05)
             print("Pose Reading: (", self.x, ",", self.y, ")")
             self.move_to(original_x, original_y, 0.05)
             print("Pose Reading: (", self.x, ",", self.y, ")")
