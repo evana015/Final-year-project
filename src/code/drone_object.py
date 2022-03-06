@@ -148,6 +148,59 @@ class Drone:
             self.movement_pub.publish(speed)
             r.sleep()
 
+    def cls(self, boundary_x, boundary_y):
+        original_x = self.x
+        original_y = self.y
+        waypoint_x = self.x
+        waypoint_y = original_y + boundary_y
+        while waypoint_x < original_x + boundary_x:
+            self.move_to(waypoint_x, waypoint_y, 0.05)  # using a unit as a base margin of error
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            waypoint_x += 1
+            self.move_to(waypoint_x, waypoint_y, 0.05)  # move across by one unit to make a parallel movement next time
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            if waypoint_y != original_y:
+                waypoint_y = original_y
+            else:
+                waypoint_y = original_y + boundary_y
+
+    def ess(self, boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a ess
+        original_x = self.x
+        original_y = self.y
+        waypoint_x = self.x
+        waypoint_y = self.y + 1
+        increment = 1
+        hit_limit = False
+        while not hit_limit:
+            self.move_to(waypoint_x, waypoint_y, 0.05)  # 0 1 # 1 -1
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            waypoint_x = waypoint_y
+            self.move_to(waypoint_x, waypoint_y, 0.05)  # 1 1 # -1 -1
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            increment += 1
+            if waypoint_y > original_y:
+                waypoint_y = waypoint_y - increment
+            else:
+                waypoint_y = waypoint_y + increment
+            if waypoint_y > original_y + boundary_y or waypoint_x > original_x + boundary_x:
+                hit_limit = True
+
+    def ss(self, radius):
+        radians_needed = [0, radians(60), radians(120), radians(180), radians(240), radians(300)]
+        original_x = self.x
+        original_y = self.y
+        n = 0
+        for i in range(0, 3):  # 3 triangle movements to perform
+            self.move_to(original_x + (radius * sin(radians_needed[n])),
+                    original_y + (radius * cos(radians_needed[n])), 0.05)
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            self.move_to(original_x + (radius * sin(radians_needed[n + 1])),
+                    original_y + (radius * cos(radians_needed[n + 1])), 0.05)
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            self.move_to(original_x, original_y, 0.05)
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            n += 2
+
     def get_x(self):
         return self.x
 
