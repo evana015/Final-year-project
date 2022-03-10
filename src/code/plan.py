@@ -37,14 +37,38 @@ class Plan:
         # if not self.probability += 0.1
         return None
 
-    def populate_actions(self):
-        return None
+    def populate_actions(self, boundary_x, boundary_y):
+        action = ""  # set of rules aka the flow chart
+        reduction = self.reduce_battery(action, boundary_x, boundary_y)
+        if self.battery - reduction <= 5:
+            return "land"
+        else:
+            self.battery -= reduction
+            return action
 
     def create_plan(self):
+        if not self.in_flight:
+            self.reduce_battery("take_off")
+            self.in_flight = True
+            self.actions.append(["take_off"])
+
+        for room in self.rooms:
+            self.actions.append(["move_to", room[2], room[3]])
+            action = self.populate_actions(room[0], room[1])
+            if action == "land":
+                self.actions.append(["land"])
+                break
+            elif self.determine_found():
+                self.actions.append([action, room[0], room[1]])
+                self.actions.append(["land"])
+                self.found = True
+                break
+            else:
+                self.actions.append([action, room[0], room[1]])
+
         # go through room by room until found or exhausted
         # rooms have the format [[boundary_x, boundary_y, room_starting_x, room_starting_y] ...]
         # moving rooms costs battery so determine that
-        return None
 
     def get_actions(self):
         return self.actions

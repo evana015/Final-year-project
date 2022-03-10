@@ -22,3 +22,7 @@ def test_actions_getter():
     new_plan = Plan([[10, 10, 0, 0]], 0.5, False)
     assert new_plan.get_actions() == []
 
+def test_empty_plan():
+    new_plan = Plan([], 0.5, False)
+    plan = new_plan.create_plan()
+    assert new_plan.get_actions() == [["take_off"]]
