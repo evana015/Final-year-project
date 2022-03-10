@@ -47,14 +47,6 @@ catkin_package(
    CATKIN_DEPENDS roscpp rospy image_transport std_msgs sensor_msgs geometry_msgs message_runtime
 )
 
-catkin_install_python(PROGRAMS src/code/fundamental_movements.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-catkin_install_python(PROGRAMS src/code/flying_patterns.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
 catkin_install_python(PROGRAMS src/code/drone_object.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
