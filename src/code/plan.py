@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import math
+import random
 
 
 # Planner TODO: decreasing and testing battery level (set 1 unit ^2 = -1%)
@@ -9,6 +10,19 @@ import math
 #               Take a dictionary/list of rooms that will be iterated through, each room will have an ideal pattern
 #               If not found move onto the next room, if last room and not found. Failed search and land
 #               implement flow chart as rules
+
+
+def reduce_battery(action, boundary_x=1, boundary_y=1):  # current implementation infers max size of all
+    # rooms must be less than 80 units^2 or the battery will deplete mid plan
+    switcher = {
+        "take_off": 5,
+        "land": 5,
+        "ess": boundary_x * boundary_y,
+        "cls": boundary_x * boundary_y,
+        "ss": round((math.pi * (boundary_x / 2) ** 2), 1)
+    }
+    return switcher.get(action, 0)
+
 
 class Plan:
 
@@ -20,26 +34,19 @@ class Plan:
         self.found = False
         self.actions = []
 
-    def reduce_battery(self, action, boundary_x=1, boundary_y=1):  # current implementation infers max size of all
-        # rooms must be less than 80 units^2 or the battery will deplete mid plan
-        switcher = {
-            "take_off": 5,
-            "land": 5,
-            "ess": boundary_x * boundary_y,
-            "cls": boundary_x * boundary_y,
-            "ss": round((math.pi * (boundary_x / 2) ** 2), 1)
-        }
-        return switcher.get(action, 0)
-
+    # randomise a float between 0 to 1 to 1 dp
+    # if random number is between 0 and self.probability then found
+    # if not self.probability += 0.1
     def determine_found(self):
-        # randomise a number between 0 to 1 to 1 dp
-        # if random number is between 0 and self.probability then found
-        # if not self.probability += 0.1
-        return None
+        if random.random() <= self.probability:
+            return True
+        else:
+            self.probability += 0.1  # increase probability if room has been explored but target not been found
+            return False
 
     def populate_actions(self, boundary_x, boundary_y):
         action = ""  # set of rules aka the flow chart
-        reduction = self.reduce_battery(action, boundary_x, boundary_y)
+        reduction = reduce_battery(action, boundary_x, boundary_y)
         if self.battery - reduction <= 5:
             return "land"
         else:
@@ -48,7 +55,7 @@ class Plan:
 
     def create_plan(self):
         if not self.in_flight:
-            self.reduce_battery("take_off")
+            reduce_battery("take_off")
             self.in_flight = True
             self.actions.append(["take_off"])
 
