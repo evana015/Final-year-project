@@ -148,8 +148,11 @@ class Drone:
             self.movement_pub.publish(speed)
             r.sleep()
 
-    # TODO the descriptions for the flying pattern movements then remove the other two programs as they will be legacy
-
+    # cls is the creeping line search pattern:
+    # Implementation consists of a while loop with two movements one in the y direction, alternating the polarity each
+    # iteration, followed by progressing along the x axis by a predetermined amount. As a standard I set this to be
+    # 1 unit but this can very easily be dictated by the user by assigning the value to a variable. This continues until
+    # the loop is broken by the next waypoint being greater than the set boundary limit
     def cls(self, boundary_x, boundary_y):
         original_x = self.x
         original_y = self.y
@@ -166,6 +169,9 @@ class Drone:
             else:
                 waypoint_y = original_y + boundary_y
 
+    # ess is the expanding square search pattern:
+    # The algorithm generates a series of coordinates in which after each movement the next is perpendicular to its
+    # previous. As well as this after every second movement the size of the vector is increased by a scaling variable
     def ess(self, boundary_x, boundary_y):  # generate a sequence of waypoints that will be followed to conduct a ess
         original_x = self.x
         original_y = self.y
@@ -187,6 +193,10 @@ class Drone:
             if waypoint_y > original_y + boundary_y or waypoint_x > original_x + boundary_x:
                 hit_limit = True
 
+    # ss is the sector search pattern:
+    # The algorithm for ss consists of a circular search that is split into three sectors, with three legs of movement
+    # in each sector, where the first leg of each is performed at 0°, 120° and 240°. Each of the sectors cover
+    # 60° in the second leg and finally return back to the datum (center point where the drone starts from).
     def ss(self, radius):  # TODO use a boundary parameter work out radius from it and continue the same
         radians_needed = [0, radians(60), radians(120), radians(180), radians(240), radians(300)]
         original_x = self.x
