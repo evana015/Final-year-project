@@ -12,11 +12,12 @@ import math
 
 class Plan:
 
-    def __init__(self, rooms, probability):
+    def __init__(self, rooms, probability, in_flight):
         self.rooms = rooms
         self.probability = probability
         self.battery = 100
-        self.in_flight = False
+        self.in_flight = in_flight
+        self.found = False
         self.actions = []
 
     def reduce_battery(self, action, boundary_x=1, boundary_y=1):  # current implementation infers max size of all
@@ -28,7 +29,7 @@ class Plan:
             "cls": boundary_x * boundary_y,
             "ss": round((math.pi * (boundary_x / 2) ** 2), 1)
         }
-        self.battery -= switcher.get(action, 0)
+        return switcher.get(action, 0)
 
     def determine_found(self):
         # randomise a number between 0 to 1 to 1 dp
@@ -37,11 +38,13 @@ class Plan:
         return None
 
     def populate_actions(self):
-        # set of rules aka the flow chart
         return None
 
-    def iterate_rooms(self):
+    def create_plan(self):
         # go through room by room until found or exhausted
-        # rooms have the format [[boundary_x, boundary_y, bottom_left_co-ordinate AS (x,y)] ...]
+        # rooms have the format [[boundary_x, boundary_y, room_starting_x, room_starting_y] ...]
         # moving rooms costs battery so determine that
         return None
+
+    def get_actions(self):
+        return self.actions
