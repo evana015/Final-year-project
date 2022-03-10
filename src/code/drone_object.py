@@ -197,7 +197,7 @@ class Drone:
     # The algorithm for ss consists of a circular search that is split into three sectors, with three legs of movement
     # in each sector, where the first leg of each is performed at 0°, 120° and 240°. Each of the sectors cover
     # 60° in the second leg and finally return back to the datum (center point where the drone starts from).
-    def ss(self, radius):  # TODO use a boundary parameter work out radius from it and continue the same
+    def ss(self, radius):
         radians_needed = [0, radians(60), radians(120), radians(180), radians(240), radians(300)]
         original_x = self.x
         original_y = self.y
