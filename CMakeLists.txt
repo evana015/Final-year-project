@@ -55,6 +55,10 @@ catkin_install_python(PROGRAMS src/code/flying_patterns.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+catkin_install_python(PROGRAMS src/code/drone_object.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 ################# 1. A system plugin for gazebo to initialize ROS  #############
 add_library( plugin_ros_init SHARED
     src/plugin_ros_init.cpp

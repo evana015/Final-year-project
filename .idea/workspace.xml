@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4edc3a63-643c-401f-ab79-75bc90d1183c" name="Changes" comment="" />
+    <list default="true" id="4edc3a63-643c-401f-ab79-75bc90d1183c" name="Changes" comment="giving better comments to object methods">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -14,6 +23,14 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="25Ky5mOyTATsVM58UAXbo5LZL0y" />
   <component name="ProjectViewState">
@@ -24,7 +41,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/catkin_ws/src/Final-year-project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/code" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -35,7 +58,72 @@
       <option name="presentableId" value="Default" />
       <updated>1645289891431</updated>
       <workItem from="1645289892750" duration="850000" />
+      <workItem from="1645291401915" duration="8836000" />
     </task>
+    <task id="LOCAL-00001" summary="Manual merge of NOVOG93 and my own repos to have an updated system">
+      <created>1645291529820</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1645291529820</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactoring code to a better directory">
+      <created>1645291564450</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645291564450</updated>
+    </task>
+    <task id="LOCAL-00003" summary="updating xml to include recent merge changes">
+      <created>1646593487186</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1646593487186</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added drone_object.py and added the init function">
+      <created>1646593504280</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1646593504280</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Adding basic functions and odom to class">
+      <created>1646594002704</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1646594002704</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Cleaned up the initializer for the drone class">
+      <created>1646595672753</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1646595672753</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added takeoff and move_to function from flying patterns to drone object this pattern will be followed for each pattern">
+      <created>1646597135309</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1646597135309</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refactored takeoff and land. This was chosen to reduce duplicate code">
+      <created>1646599448645</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1646599448645</updated>
+    </task>
+    <task id="LOCAL-00009" summary="giving better comments to object methods">
+      <created>1646600707662</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1646600707662</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -51,5 +139,18 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Manual merge of NOVOG93 and my own repos to have an updated system" />
+    <MESSAGE value="refactoring code to a better directory" />
+    <MESSAGE value="updating xml to include recent merge changes" />
+    <MESSAGE value="Added drone_object.py and added the init function" />
+    <MESSAGE value="Adding basic functions and odom to class" />
+    <MESSAGE value="Cleaned up the initializer for the drone class" />
+    <MESSAGE value="Added takeoff and move_to function from flying patterns to drone object this pattern will be followed for each pattern" />
+    <MESSAGE value="refactored takeoff and land. This was chosen to reduce duplicate code" />
+    <MESSAGE value="giving better comments to object methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="giving better comments to object methods" />
   </component>
 </project>
