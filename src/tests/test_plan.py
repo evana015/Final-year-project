@@ -18,6 +18,11 @@ def test_reduce_battery_ss():
     reduction = new_plan.reduce_battery("ss", 5, 5)
     assert reduction == 19.6
 
+def test_reduce_battery_no_action():
+    new_plan = Plan([[10, 10, 0, 0]], 0.5, False)
+    reduction = new_plan.reduce_battery("", 5, 5)
+    assert reduction == 0
+
 def test_actions_getter():
     new_plan = Plan([[10, 10, 0, 0]], 0.5, False)
     assert new_plan.get_actions() == []
