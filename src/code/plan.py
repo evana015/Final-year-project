@@ -2,6 +2,7 @@
 import math
 import random
 
+
 # Current implementation infers max size of all rooms must be less than 90 units^2 or the battery will deplete mid
 # plan due to the 5 percent reserved for take_off and landing.
 # Battery level decreases at a rate of 1 unit^2 == -1% as I dont have the capability to do real world tests
@@ -67,14 +68,14 @@ class Plan:
                 self.in_flight = True
                 self.actions.append(["take_off"])
             else:
-                self.actions.append(["not enough battery to take off and safely land"])  # TODO: special case
+                self.actions.append(["not enough battery to safely take off and land"])  # TODO: special case
 
         for room in self.rooms:
             action = self.populate_actions(room[0], room[1], room[2], room[3])
             if action == "land":
                 break
             elif self.determine_found():
-                self.actions.append(["move_to", room[2], room[3]])
+                self.actions.append(["move_to", room[2], room[3]])  # TODO: make this contextual to the pattern
                 self.actions.append([action, room[0], room[1]])
                 self.found = True
                 break
