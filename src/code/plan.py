@@ -2,15 +2,6 @@
 import math
 import random
 
-
-# Planner TODO: decreasing and testing battery level (set 1 unit ^2 = -1%)
-#               increase probability per iteration where not found
-#               add a weighted found chance (using probability found)
-#               take off and land must be in the plan but can be tested for on initiation (if hovering etc)
-#               Take a dictionary/list of rooms that will be iterated through, each room will have an ideal pattern
-#               If not found move onto the next room, if last room and not found. Failed search and land
-#               implement flow chart as rules
-
 # Current implementation infers max size of all rooms must be less than 90 units^2 or the battery will deplete mid
 # plan due to the 5 percent reserved for take_off and landing.
 # Battery level decreases at a rate of 1 unit^2 == -1% as I dont have the capability to do real world tests
