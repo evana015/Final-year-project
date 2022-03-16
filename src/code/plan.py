@@ -80,14 +80,14 @@ class Plan:
                 self.in_flight = True
                 self.actions.append(["take_off"])
             else:
-                self.actions.append(["not enough battery to safely take off and land"])  # TODO: special case
+                self.actions.append(["not enough battery to safely take off and land"])
 
         for room in self.rooms:
             action, contextual_x, contextual_y = self.populate_actions(room[0], room[1], room[2], room[3])
             if action == "land":
                 break
             elif self.determine_found():
-                self.actions.append(["move_to", contextual_x, contextual_y])  # TODO: make this contextual to the pattern
+                self.actions.append(["move_to", contextual_x, contextual_y])
                 self.actions.append([action, room[0], room[1]])
                 self.found = True
                 break
