@@ -39,25 +39,37 @@ class Plan:
             self.probability += 0.1  # increase probability if room has been explored but target not been found
             return False
 
+    # Using a set of conditionals determine the ideal pattern for the current room Actions are returned to
+    # create_plan if there is sufficient battery for the actions that will be added
+    # Contextual move to coordinates allow for patterns that concern themselves with a datum start from the center
+    # the room, as well as this ps should be started from the top left of the room
     def populate_actions(self, boundary_x, boundary_y, move_to_x, move_to_y):
         area_of_room = boundary_x * boundary_y
         if area_of_room >= 35:  # determining if a room is of a large size using 35m^2 as the indicator of a large room
             if self.probability < 0.5:
                 action = "ps"
+                contextual_move_to_x = move_to_x
+                contextual_move_to_y = move_to_y + boundary_y
             else:
                 action = "cls"
+                contextual_move_to_x = move_to_x
+                contextual_move_to_y = move_to_y
         else:
             if self.probability < 0.5:
                 action = "ess"
+                contextual_move_to_x = move_to_x + (boundary_x/2)
+                contextual_move_to_y = move_to_y + (boundary_y/2)
             else:
                 action = "ss"
-        movement_reduction = reduce_battery("move_to", move_to_x, move_to_y)
+                contextual_move_to_x = move_to_x + (boundary_x / 2)
+                contextual_move_to_y = move_to_y + (boundary_y / 2)
+        movement_reduction = reduce_battery("move_to", contextual_move_to_x, contextual_move_to_y)
         reduction = reduce_battery(action, boundary_x, boundary_y) + movement_reduction
         if self.battery - reduction <= 5:
-            return "land"
+            return "land", None, None
         else:
             self.battery -= reduction
-            return action
+            return action, contextual_move_to_x, contextual_move_to_y
 
     # go through room by room until found or exhausted
     # rooms have the format [[boundary_x, boundary_y, room_starting_x, room_starting_y] ...]
@@ -71,16 +83,16 @@ class Plan:
                 self.actions.append(["not enough battery to safely take off and land"])  # TODO: special case
 
         for room in self.rooms:
-            action = self.populate_actions(room[0], room[1], room[2], room[3])
+            action, contextual_x, contextual_y = self.populate_actions(room[0], room[1], room[2], room[3])
             if action == "land":
                 break
             elif self.determine_found():
-                self.actions.append(["move_to", room[2], room[3]])  # TODO: make this contextual to the pattern
+                self.actions.append(["move_to", contextual_x, contextual_y])  # TODO: make this contextual to the pattern
                 self.actions.append([action, room[0], room[1]])
                 self.found = True
                 break
             else:
-                self.actions.append(["move_to", room[2], room[3]])
+                self.actions.append(["move_to", contextual_x, contextual_y])
                 self.actions.append([action, room[0], room[1]])
 
         self.actions.append(["land"])
