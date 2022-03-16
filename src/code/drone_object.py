@@ -221,6 +221,21 @@ class Drone:
             print("Pose Reading: (", self.x, ",", self.y, ")")
             n += 2
 
+    def ps(self, boundary_x, boundary_y):
+        original_x = self.x
+        original_y = self.y
+        waypoint_x = original_x + boundary_x
+        waypoint_y = self.y
+        while waypoint_y > original_y - boundary_y:
+            self.move_to(waypoint_x, waypoint_y, 0.05)
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            waypoint_y -= 1
+            self.move_to(waypoint_x, waypoint_y, 0.05)
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            if waypoint_x != original_x:
+                waypoint_x = original_x
+            else:
+                waypoint_x = original_x + boundary_x
     # plan_interpreter takes the parameter of a plan object, generates the plan via create_plan() and then iterates
     # through the actions one by one and performs the corresponding actions
     def plan_interpreter(self, plan):
@@ -264,5 +279,7 @@ class Drone:
 
 
 test_drone = Drone("Parrot", 10)
-test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
-test_drone.plan_interpreter(new_plan)
+test_drone.takeoff_or_land("take_off")
+test_drone.ps(3, 3)
+# test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
+# test_drone.plan_interpreter(new_plan)
