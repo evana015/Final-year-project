@@ -221,6 +221,12 @@ class Drone:
             print("Pose Reading: (", self.x, ",", self.y, ")")
             n += 2
 
+    # Parallel search (ps) starts from the top left of the area that is searching and traverses it from one side of
+    # the x boundary to the other.
+    # It also slowly traverses towards the bottom boundary of the area by decreasing its y waypoint after each travel
+    # across the width of the area.
+    # The bottom boundary of the area is calculated by using the drones current y position and subtracting the
+    # parameter boundary_y
     def ps(self, boundary_x, boundary_y):
         original_x = self.x
         original_y = self.y
@@ -236,6 +242,7 @@ class Drone:
                 waypoint_x = original_x
             else:
                 waypoint_x = original_x + boundary_x
+
     # plan_interpreter takes the parameter of a plan object, generates the plan via create_plan() and then iterates
     # through the actions one by one and performs the corresponding actions
     def plan_interpreter(self, plan):
