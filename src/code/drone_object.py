@@ -262,7 +262,8 @@ class Drone:
                 self.ess(action[1], action[2])
             elif action[0] == "ss":
                 self.ss(action[1] / 2)
-            # elif action[0] == "ps":                  # TODO: create "ps"
+            elif action[0] == "ps":
+                self.ps(action[1], action[2])
             else:
                 print("Invalid action in plan: ", action[0])  # could create my own exception for this
 
@@ -286,7 +287,5 @@ class Drone:
 
 
 test_drone = Drone("Parrot", 10)
-test_drone.takeoff_or_land("take_off")
-test_drone.ps(3, 3)
-# test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
-# test_drone.plan_interpreter(new_plan)
+test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
+test_drone.plan_interpreter(new_plan)
