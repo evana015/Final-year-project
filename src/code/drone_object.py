@@ -4,6 +4,12 @@ from std_msgs.msg import Empty
 from geometry_msgs.msg import Pose, Twist, Point
 from tf.transformations import euler_from_quaternion
 from math import atan2, sin, cos, radians
+from pathlib import Path
+
+import sys
+path_root = Path(__file__).parents[2]
+sys.path.append(str(path_root))
+from src.code.plan import Plan
 
 
 class Drone:
@@ -42,7 +48,7 @@ class Drone:
     # The method will take a "choice" parameter which will determine which publisher to use
     def takeoff_or_land(self, choice):
         ctrl_c = False
-        if choice == "takeoff":
+        if choice == "take_off":
             choice = self.takeoff_pub
         else:
             choice = self.land_pub
@@ -113,7 +119,7 @@ class Drone:
     # the ability to adjust between accuracy and speed as increased accuracy requires more time to achieve The goal x
     # and y are compared against the drones current location data provided by the odometer to determine the
     # direction it needs to go as well if it has reached its destination
-    def move_to(self, goal_x, goal_y, margin):
+    def move_to(self, goal_x, goal_y, margin=0.05):
         print("moving to waypoint(", goal_x, ",", goal_y, ")")
         speed = Twist()
 
@@ -213,6 +219,20 @@ class Drone:
             print("Pose Reading: (", self.x, ",", self.y, ")")
             n += 2
 
+    def plan_interpreter(self, plan):
+        action_list = plan.get_actions()
+        for action in action_list:
+            trigger_actions = {
+                "take_off": self.takeoff_or_land("take_off"),
+                "land": self.takeoff_or_land("land"),
+                "move_to": self.move_to(action[1], action[2]),
+                "cls": self.cls(action[1], action[2]),
+                "ess": self.ess(action[1], action[2]),
+                "ss": self.ss(action[1] / 2)
+                # TODO: create "ps"
+            }
+            trigger_actions.get(action[0])
+
     def get_x(self):
         return self.x
 
@@ -233,5 +253,5 @@ class Drone:
 
 
 test_drone = Drone("Parrot", 10)
-test_drone.takeoff_or_land("takeoff")
-test_drone.move_to(4, 4, 0.5)
+test_plan = new_plan = Plan([], 0.5, False)
+test_drone.plan_interpreter(new_plan)
