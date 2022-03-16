@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import rospy
 from std_msgs.msg import Empty
 from geometry_msgs.msg import Pose, Twist, Point
@@ -7,6 +8,7 @@ from math import atan2, sin, cos, radians
 from pathlib import Path
 
 import sys
+
 path_root = Path(__file__).parents[2]
 sys.path.append(str(path_root))
 from src.code.plan import Plan
@@ -55,7 +57,7 @@ class Drone:
         while not ctrl_c:
             connections = choice.get_num_connections()
             if connections > 0:
-                self.choice.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
+                choice.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
                 ctrl_c = True
             else:
                 self.rate.sleep()  # sleeps just long enough to maintain the desired rate to loop through
@@ -219,19 +221,28 @@ class Drone:
             print("Pose Reading: (", self.x, ",", self.y, ")")
             n += 2
 
+    # plan_interpreter takes the parameter of a plan object, generates the plan via create_plan() and then iterates
+    # through the actions one by one and performs the corresponding actions
     def plan_interpreter(self, plan):
+        plan.create_plan()
         action_list = plan.get_actions()
         for action in action_list:
-            trigger_actions = {
-                "take_off": self.takeoff_or_land("take_off"),
-                "land": self.takeoff_or_land("land"),
-                "move_to": self.move_to(action[1], action[2]),
-                "cls": self.cls(action[1], action[2]),
-                "ess": self.ess(action[1], action[2]),
-                "ss": self.ss(action[1] / 2)
-                # TODO: create "ps"
-            }
-            trigger_actions.get(action[0])
+            print("triggering ", action[0])
+            if action[0] == "take_off":
+                self.takeoff_or_land("take_off")
+            elif action[0] == "land":
+                self.takeoff_or_land("land")
+            elif action[0] == "move_to":
+                self.move_to(action[1], action[2])
+            elif action[0] == "cls":
+                self.cls(action[1], action[2])
+            elif action[0] == "ess":
+                self.ess(action[1], action[2])
+            elif action[0] == "ss":
+                self.ss(action[1] / 2)
+            # elif action[0] == "ps":                  # TODO: create "ps"
+            else:
+                print("Invalid action in plan: ", action[0])  # could create my own exception for this
 
     def get_x(self):
         return self.x
@@ -253,5 +264,5 @@ class Drone:
 
 
 test_drone = Drone("Parrot", 10)
-test_plan = new_plan = Plan([], 0.5, False)
+test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
 test_drone.plan_interpreter(new_plan)
