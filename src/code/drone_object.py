@@ -1,9 +1,17 @@
 #!/usr/bin/env python
+
 import rospy
 from std_msgs.msg import Empty
 from geometry_msgs.msg import Pose, Twist, Point
 from tf.transformations import euler_from_quaternion
 from math import atan2, sin, cos, radians
+from pathlib import Path
+
+import sys
+
+path_root = Path(__file__).parents[2]
+sys.path.append(str(path_root))
+from src.code.plan import Plan
 
 
 class Drone:
@@ -42,14 +50,14 @@ class Drone:
     # The method will take a "choice" parameter which will determine which publisher to use
     def takeoff_or_land(self, choice):
         ctrl_c = False
-        if choice == "takeoff":
+        if choice == "take_off":
             choice = self.takeoff_pub
         else:
             choice = self.land_pub
         while not ctrl_c:
             connections = choice.get_num_connections()
             if connections > 0:
-                self.choice.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
+                choice.publish((Empty()))  # Publishes Empty "{}" to the takeoff rostopic
                 ctrl_c = True
             else:
                 self.rate.sleep()  # sleeps just long enough to maintain the desired rate to loop through
@@ -113,7 +121,7 @@ class Drone:
     # the ability to adjust between accuracy and speed as increased accuracy requires more time to achieve The goal x
     # and y are compared against the drones current location data provided by the odometer to determine the
     # direction it needs to go as well if it has reached its destination
-    def move_to(self, goal_x, goal_y, margin):
+    def move_to(self, goal_x, goal_y, margin=0.05):
         print("moving to waypoint(", goal_x, ",", goal_y, ")")
         speed = Twist()
 
@@ -197,7 +205,7 @@ class Drone:
     # The algorithm for ss consists of a circular search that is split into three sectors, with three legs of movement
     # in each sector, where the first leg of each is performed at 0°, 120° and 240°. Each of the sectors cover
     # 60° in the second leg and finally return back to the datum (center point where the drone starts from).
-    def ss(self, radius):  # TODO use a boundary parameter work out radius from it and continue the same
+    def ss(self, radius):
         radians_needed = [0, radians(60), radians(120), radians(180), radians(240), radians(300)]
         original_x = self.x
         original_y = self.y
@@ -212,6 +220,29 @@ class Drone:
             self.move_to(original_x, original_y, 0.05)
             print("Pose Reading: (", self.x, ",", self.y, ")")
             n += 2
+
+    # plan_interpreter takes the parameter of a plan object, generates the plan via create_plan() and then iterates
+    # through the actions one by one and performs the corresponding actions
+    def plan_interpreter(self, plan):
+        plan.create_plan()
+        action_list = plan.get_actions()
+        for action in action_list:
+            print("triggering ", action[0])
+            if action[0] == "take_off":
+                self.takeoff_or_land("take_off")
+            elif action[0] == "land":
+                self.takeoff_or_land("land")
+            elif action[0] == "move_to":
+                self.move_to(action[1], action[2])
+            elif action[0] == "cls":
+                self.cls(action[1], action[2])
+            elif action[0] == "ess":
+                self.ess(action[1], action[2])
+            elif action[0] == "ss":
+                self.ss(action[1] / 2)
+            # elif action[0] == "ps":                  # TODO: create "ps"
+            else:
+                print("Invalid action in plan: ", action[0])  # could create my own exception for this
 
     def get_x(self):
         return self.x
@@ -233,5 +264,5 @@ class Drone:
 
 
 test_drone = Drone("Parrot", 10)
-test_drone.takeoff_or_land("takeoff")
-test_drone.move_to(4, 4, 0.5)
+test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
+test_drone.plan_interpreter(new_plan)
