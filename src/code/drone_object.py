@@ -221,6 +221,28 @@ class Drone:
             print("Pose Reading: (", self.x, ",", self.y, ")")
             n += 2
 
+    # Parallel search (ps) starts from the top left of the area that is searching and traverses it from one side of
+    # the x boundary to the other.
+    # It also slowly traverses towards the bottom boundary of the area by decreasing its y waypoint after each travel
+    # across the width of the area.
+    # The bottom boundary of the area is calculated by using the drones current y position and subtracting the
+    # parameter boundary_y
+    def ps(self, boundary_x, boundary_y):
+        original_x = self.x
+        original_y = self.y
+        waypoint_x = original_x + boundary_x
+        waypoint_y = self.y
+        while waypoint_y > original_y - boundary_y:
+            self.move_to(waypoint_x, waypoint_y, 0.05)
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            waypoint_y -= 1
+            self.move_to(waypoint_x, waypoint_y, 0.05)
+            print("Pose Reading: (", self.x, ",", self.y, ")")
+            if waypoint_x != original_x:
+                waypoint_x = original_x
+            else:
+                waypoint_x = original_x + boundary_x
+
     # plan_interpreter takes the parameter of a plan object, generates the plan via create_plan() and then iterates
     # through the actions one by one and performs the corresponding actions
     def plan_interpreter(self, plan):
@@ -240,7 +262,8 @@ class Drone:
                 self.ess(action[1], action[2])
             elif action[0] == "ss":
                 self.ss(action[1] / 2)
-            # elif action[0] == "ps":                  # TODO: create "ps"
+            elif action[0] == "ps":
+                self.ps(action[1], action[2])
             else:
                 print("Invalid action in plan: ", action[0])  # could create my own exception for this
 
