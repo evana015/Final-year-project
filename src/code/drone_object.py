@@ -287,5 +287,6 @@ class Drone:
 
 
 test_drone = Drone("Parrot", 10)
-test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
-test_drone.plan_interpreter(new_plan)
+test_plan = Plan([[1, 1, 1, 1]], 0.2, False)
+test_drone.plan_interpreter(test_plan)
+test_plan.export_plan()

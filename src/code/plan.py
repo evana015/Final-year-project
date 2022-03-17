@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import math
 import random
+import pandas as pd
+from datetime import datetime
 
 
 # Current implementation infers max size of all rooms must be less than 90 units^2 or the battery will deplete mid
@@ -28,6 +30,7 @@ class Plan:
         self.in_flight = in_flight
         self.found = False
         self.actions = []
+        self.time_of_creation = None
 
     # randomise a float between 0 to 1 to 1 dp
     # if random number is between 0 and self.probability then found
@@ -57,8 +60,8 @@ class Plan:
         else:
             if self.probability < 0.5:
                 action = "ess"
-                contextual_move_to_x = move_to_x + (boundary_x/2)
-                contextual_move_to_y = move_to_y + (boundary_y/2)
+                contextual_move_to_x = move_to_x + (boundary_x / 2)
+                contextual_move_to_y = move_to_y + (boundary_y / 2)
             else:
                 action = "ss"
                 contextual_move_to_x = move_to_x + (boundary_x / 2)
@@ -74,6 +77,7 @@ class Plan:
     # go through room by room until found or exhausted
     # rooms have the format [[boundary_x, boundary_y, room_starting_x, room_starting_y] ...]
     def create_plan(self):
+        self.time_of_creation = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         if not self.in_flight:
             if self.battery >= 10:
                 self.battery -= reduce_battery("take_off")
@@ -98,6 +102,17 @@ class Plan:
         self.actions.append(["land"])
         self.battery -= reduce_battery("land")
         self.in_flight = False
+
+    def export_plan(self):
+        df_cols = ["TimeOfCreation", "CompletionTime", "Rooms", "SequenceOfActions", "BatteryOnCompletion",
+                   "Found"]
+        df = pd.DataFrame(columns=df_cols)
+        new_row = [self.time_of_creation, datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+                   " ".join(str(room) for room in self.rooms), " ".join(str(action) for action in self.actions),
+                   self.battery, self.found]
+        df.loc[0] = new_row
+
+        df.to_xml(path_or_buffer=r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans")
 
     def get_actions(self):
         return self.actions
