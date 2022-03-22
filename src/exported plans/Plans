@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<data>
+  <row>
+    <TimeOfCreation>17/03/2022 21:32:19</TimeOfCreation>
+    <CompletionTime>17/03/2022 21:33:58</CompletionTime>
+    <Rooms>[1, 1, 1, 1]</Rooms>
+    <SequenceOfActions>['take_off'],['move_to', 1.5, 1.5],['ess', 1, 1],['land']</SequenceOfActions>
+    <BatteryOnCompletion>86.0</BatteryOnCompletion>
+    <Found>True</Found>
+  </row>
+</data>
