@@ -104,15 +104,12 @@ class Plan:
         self.in_flight = False
 
     def export_plan(self):
-        df_cols = ["TimeOfCreation", "CompletionTime", "Rooms", "SequenceOfActions", "BatteryOnCompletion",
-                   "Found"]
-        df = pd.DataFrame(columns=df_cols)
-        new_row = [self.time_of_creation, datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                   " ".join(str(room) for room in self.rooms), " ".join(str(action) for action in self.actions),
-                   self.battery, self.found]
-        df.loc[0] = new_row
-
-        df.to_xml(path_or_buffer=r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans")
+        df = pd.read_xml(r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans")
+        df.loc[len(df.index)] = [self.time_of_creation, datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+                                 ",".join(str(room) for room in self.rooms),
+                                 ",".join(str(action) for action in self.actions),
+                                 self.battery, self.found]
+        df.to_xml(path_or_buffer=r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans", index=False)
 
     def get_actions(self):
         return self.actions
