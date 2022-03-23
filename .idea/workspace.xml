@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4edc3a63-643c-401f-ab79-75bc90d1183c" name="Changes" comment="giving better comments to object methods">
+    <list default="true" id="4edc3a63-643c-401f-ab79-75bc90d1183c" name="Changes" comment="adding plot back from the interim tag for more visual testing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/code/drone_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/drone_object.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/code/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/plan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exported plans/Plans" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="ai_planning" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,13 +44,115 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/test_ws/src/sjtu-drone" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/code" />
     </key>
+  </component>
+  <component name="RunManager" selected="Python.plot">
+    <configuration name="plot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Final-year-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/code" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/code/plot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_plan.test_ps_and_ess_plan" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Final-year-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_plan.test_ps_and_ess_plan&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_plan.test_reduce_battery" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="Final-year-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_plan.test_reduce_battery&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest all in test_drone_object" type="tests" factoryName="py.test">
+      <module name="Final-year-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="/usr/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/src/tests/test_drone_object.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest all in test_plan" type="tests" factoryName="py.test">
+      <module name="Final-year-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="/usr/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/src/tests/test_plan.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python tests.pytest all in test_plan" />
+      <item itemvalue="Python tests.pytest all in test_drone_object" />
+      <item itemvalue="Python tests.Python tests for test_plan.test_reduce_battery" />
+      <item itemvalue="Python tests.Python tests for test_plan.test_ps_and_ess_plan" />
+      <item itemvalue="Python.plot" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.plot" />
+        <item itemvalue="Python tests.Python tests for test_plan.test_ps_and_ess_plan" />
+        <item itemvalue="Python tests.Python tests for test_plan.test_reduce_battery" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -59,6 +164,7 @@
       <updated>1645289891431</updated>
       <workItem from="1645289892750" duration="850000" />
       <workItem from="1645291401915" duration="8836000" />
+      <workItem from="1647793428168" duration="11691000" />
     </task>
     <task id="LOCAL-00001" summary="Manual merge of NOVOG93 and my own repos to have an updated system">
       <created>1645291529820</created>
@@ -123,7 +229,175 @@
       <option name="project" value="LOCAL" />
       <updated>1646600707662</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="removing redundant todo">
+      <created>1646939611037</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1646939611037</updated>
+    </task>
+    <task id="LOCAL-00011" summary="removing legacy code from catkin make list">
+      <created>1646939637682</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1646939637682</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Adding plan object and unit tests for reducing the battery">
+      <created>1646939658383</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1646939658383</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Adding comments for future changes to be made using the concepts of splitting the map into rooms">
+      <created>1646942493702</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1646942493702</updated>
+    </task>
+    <task id="LOCAL-00014" summary="adding in_flight parameter to initializer, renaming iterate_rooms to create_plan and adding a getter for actions with a test">
+      <created>1646944937047</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1646944937047</updated>
+    </task>
+    <task id="LOCAL-00015" summary="filled out create_plan, so it can handle an empty room list and future proofed populate_actions to ensure landing is prioritised with test">
+      <created>1646945072796</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1646945072796</updated>
+    </task>
+    <task id="LOCAL-00016" summary="adding additional battery test for no action pushed">
+      <created>1646945415957</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1646945415957</updated>
+    </task>
+    <task id="LOCAL-00017" summary="adding determine_found method, making reduce battery method a function and testing determine_found appropriately">
+      <created>1646949479201</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1646949479201</updated>
+    </task>
+    <task id="LOCAL-00018" summary="adding the rules of which pattern best suits what room and tested some scenarios">
+      <created>1646953611835</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1646953611835</updated>
+    </task>
+    <task id="LOCAL-00019" summary="adding movement battery reduction, testing move battery reduction and more edge cases of planning">
+      <created>1646956588467</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1646956588467</updated>
+    </task>
+    <task id="LOCAL-00020" summary="fixing formatting">
+      <created>1647389860330</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1647389860330</updated>
+    </task>
+    <task id="LOCAL-00021" summary="removing todo notes">
+      <created>1647389891432</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1647389891432</updated>
+    </task>
+    <task id="LOCAL-00022" summary="adding plan_interpreter">
+      <created>1647389914380</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1647389914380</updated>
+    </task>
+    <task id="LOCAL-00023" summary="adding plan.py to catkin make list">
+      <created>1647389923888</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1647389923888</updated>
+    </task>
+    <task id="LOCAL-00024" summary="changing plan_interpreter switcher to a set of if - elif - else statements and fixed take_off">
+      <created>1647393062679</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1647393062679</updated>
+    </task>
+    <task id="LOCAL-00025" summary="added TODO">
+      <created>1647393077486</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1647393077486</updated>
+    </task>
+    <task id="LOCAL-00026" summary="adding contextual move_to actions to make the searching more efficient per room">
+      <created>1647396482777</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1647396482777</updated>
+    </task>
+    <task id="LOCAL-00027" summary="removing TODOs">
+      <created>1647396512169</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1647396512169</updated>
+    </task>
+    <task id="LOCAL-00028" summary="adding ps pattern">
+      <created>1647412474039</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1647412474039</updated>
+    </task>
+    <task id="LOCAL-00029" summary="adding ps pattern comment">
+      <created>1647412753317</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1647412753317</updated>
+    </task>
+    <task id="LOCAL-00030" summary="adding ps pattern to plan interpreter">
+      <created>1647412808202</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1647412808202</updated>
+    </task>
+    <task id="LOCAL-00031" summary="adding the ability to add to the same xml instead of overwrite">
+      <created>1647953660346</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1647953660346</updated>
+    </task>
+    <task id="LOCAL-00032" summary="updated xml">
+      <created>1647953690574</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1647953690574</updated>
+    </task>
+    <task id="LOCAL-00033" summary="adding plot back from the interim tag for more visual testing">
+      <created>1647953733280</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1647953733280</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,7 +408,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="final_pattern" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -142,15 +428,37 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Manual merge of NOVOG93 and my own repos to have an updated system" />
-    <MESSAGE value="refactoring code to a better directory" />
-    <MESSAGE value="updating xml to include recent merge changes" />
-    <MESSAGE value="Added drone_object.py and added the init function" />
-    <MESSAGE value="Adding basic functions and odom to class" />
-    <MESSAGE value="Cleaned up the initializer for the drone class" />
-    <MESSAGE value="Added takeoff and move_to function from flying patterns to drone object this pattern will be followed for each pattern" />
-    <MESSAGE value="refactored takeoff and land. This was chosen to reduce duplicate code" />
     <MESSAGE value="giving better comments to object methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="giving better comments to object methods" />
+    <MESSAGE value="removing redundant todo" />
+    <MESSAGE value="removing legacy code from catkin make list" />
+    <MESSAGE value="Adding plan object and unit tests for reducing the battery" />
+    <MESSAGE value="Adding comments for future changes to be made using the concepts of splitting the map into rooms" />
+    <MESSAGE value="adding in_flight parameter to initializer, renaming iterate_rooms to create_plan and adding a getter for actions with a test" />
+    <MESSAGE value="filled out create_plan, so it can handle an empty room list and future proofed populate_actions to ensure landing is prioritised with test" />
+    <MESSAGE value="adding additional battery test for no action pushed" />
+    <MESSAGE value="adding determine_found method, making reduce battery method a function and testing determine_found appropriately" />
+    <MESSAGE value="adding the rules of which pattern best suits what room and tested some scenarios" />
+    <MESSAGE value="adding movement battery reduction, testing move battery reduction and more edge cases of planning" />
+    <MESSAGE value="fixing formatting" />
+    <MESSAGE value="removing todo notes" />
+    <MESSAGE value="adding plan_interpreter" />
+    <MESSAGE value="adding plan.py to catkin make list" />
+    <MESSAGE value="changing plan_interpreter switcher to a set of if - elif - else statements and fixed take_off" />
+    <MESSAGE value="added TODO" />
+    <MESSAGE value="adding contextual move_to actions to make the searching more efficient per room" />
+    <MESSAGE value="removing TODOs" />
+    <MESSAGE value="adding ps pattern" />
+    <MESSAGE value="adding ps pattern comment" />
+    <MESSAGE value="adding ps pattern to plan interpreter" />
+    <MESSAGE value="adding the ability to add to the same xml instead of overwrite" />
+    <MESSAGE value="updated xml" />
+    <MESSAGE value="adding plot back from the interim tag for more visual testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding plot back from the interim tag for more visual testing" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Final_year_project$pytest_all_in_test_plan.coverage" NAME="pytest all in test_plan Coverage Results" MODIFIED="1647951180250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Final_year_project$.coverage" NAME=" Coverage Results" MODIFIED="1646954416048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/tests" />
+    <SUITE FILE_PATH="coverage/Final_year_project$pytest_all_in_test_drone_object.coverage" NAME="pytest all in test_drone_object Coverage Results" MODIFIED="1646960135053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Final_year_project$plot.coverage" NAME="plot Coverage Results" MODIFIED="1647953539213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/code" />
   </component>
 </project>

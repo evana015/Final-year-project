@@ -1,11 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <data>
   <row>
-    <TimeOfCreation>17/03/2022 21:32:19</TimeOfCreation>
-    <CompletionTime>17/03/2022 21:33:58</CompletionTime>
-    <Rooms>[1, 1, 1, 1]</Rooms>
-    <SequenceOfActions>['take_off'],['move_to', 1.5, 1.5],['ess', 1, 1],['land']</SequenceOfActions>
+    <TimeOfCreation>23/03/2022 15:08:18</TimeOfCreation>
+    <CompletionTime>23/03/2022 15:11:57</CompletionTime>
+    <Partitions>[1, 1, 1, 1]</Partitions>
+    <SequenceOfActions>['take_off'] ['move_to', 1.5, 1.5] ['ess', 1, 1] ['land']</SequenceOfActions>
     <BatteryOnCompletion>86.0</BatteryOnCompletion>
+    <Found>False</Found>
+  </row>
+  <row>
+    <TimeOfCreation>23/03/2022 15:39:17</TimeOfCreation>
+    <CompletionTime>23/03/2022 15:39:17</CompletionTime>
+    <Partitions>[4, 3, 0, 0],[2, 8, 4, 2]</Partitions>
+    <SequenceOfActions>['take_off'],['move_to', 2.0, 1.5],['ess', 4, 3],['move_to', 5.0, 6.0],['ess', 2, 8],['land']</SequenceOfActions>
+    <BatteryOnCompletion>47.5</BatteryOnCompletion>
     <Found>True</Found>
   </row>
 </data>

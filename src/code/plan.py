@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 
 
-# Current implementation infers max size of all rooms must be less than 90 units^2 or the battery will deplete mid
+# Current implementation infers max size of all partitions must be less than 90 units^2 or the battery will deplete mid
 # plan due to the 5 percent reserved for take_off and landing.
 # Battery level decreases at a rate of 1 unit^2 == -1% as I dont have the capability to do real world tests
 def reduce_battery(action, boundary_x=1, boundary_y=1):
@@ -23,8 +23,8 @@ def reduce_battery(action, boundary_x=1, boundary_y=1):
 
 class Plan:
 
-    def __init__(self, rooms, probability, in_flight):
-        self.rooms = rooms
+    def __init__(self, partitions, probability, in_flight):
+        self.partitions = partitions
         self.probability = probability
         self.battery = 100
         self.in_flight = in_flight
@@ -75,7 +75,7 @@ class Plan:
             return action, contextual_move_to_x, contextual_move_to_y
 
     # go through room by room until found or exhausted
-    # rooms have the format [[boundary_x, boundary_y, room_starting_x, room_starting_y] ...]
+    # partitions have the format [[boundary_x, boundary_y, room_starting_x, room_starting_y] ...]
     def create_plan(self):
         self.time_of_creation = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         if not self.in_flight:
@@ -86,18 +86,18 @@ class Plan:
             else:
                 self.actions.append(["not enough battery to safely take off and land"])
 
-        for room in self.rooms:
-            action, contextual_x, contextual_y = self.populate_actions(room[0], room[1], room[2], room[3])
+        for partition in self.partitions:
+            action, contextual_x, contextual_y = self.populate_actions(partition[0], partition[1], partition[2], partition[3])
             if action == "land":
                 break
             elif self.determine_found():
                 self.actions.append(["move_to", contextual_x, contextual_y])
-                self.actions.append([action, room[0], room[1]])
+                self.actions.append([action, partition[0], partition[1]])
                 self.found = True
                 break
             else:
                 self.actions.append(["move_to", contextual_x, contextual_y])
-                self.actions.append([action, room[0], room[1]])
+                self.actions.append([action, partition[0], partition[1]])
 
         self.actions.append(["land"])
         self.battery -= reduce_battery("land")
@@ -106,7 +106,7 @@ class Plan:
     def export_plan(self):
         df = pd.read_xml(r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans")
         df.loc[len(df.index)] = [self.time_of_creation, datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                                 ",".join(str(room) for room in self.rooms),
+                                 ",".join(str(partition) for partition in self.partitions),
                                  ",".join(str(action) for action in self.actions),
                                  self.battery, self.found]
         df.to_xml(path_or_buffer=r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans", index=False)
