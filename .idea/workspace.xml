@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4edc3a63-643c-401f-ab79-75bc90d1183c" name="Changes" comment="adding plot back from the interim tag for more visual testing">
+    <list default="true" id="4edc3a63-643c-401f-ab79-75bc90d1183c" name="Changes" comment="refactoring rooms to be partitions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/code/drone_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/drone_object.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/code/plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/code/plan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/exported plans/Plans" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exported plans/Plans" beforeDir="false" afterPath="$PROJECT_DIR$/src/exported plans/Plans" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/teleop_twist_keyboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/teleop_twist_keyboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/test_plan.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/test_plan.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +54,7 @@
       <recent name="$PROJECT_DIR$/src/code" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.plot">
+  <component name="RunManager" selected="Python tests.pytest all in test_plan">
     <configuration name="plot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Final-year-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -164,7 +166,7 @@
       <updated>1645289891431</updated>
       <workItem from="1645289892750" duration="850000" />
       <workItem from="1645291401915" duration="8836000" />
-      <workItem from="1647793428168" duration="11691000" />
+      <workItem from="1647793428168" duration="13331000" />
     </task>
     <task id="LOCAL-00001" summary="Manual merge of NOVOG93 and my own repos to have an updated system">
       <created>1645291529820</created>
@@ -397,7 +399,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647953733280</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="refactoring rooms to be partitions">
+      <created>1648050029178</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1648050029178</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -428,7 +437,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="giving better comments to object methods" />
     <MESSAGE value="removing redundant todo" />
     <MESSAGE value="removing legacy code from catkin make list" />
     <MESSAGE value="Adding plan object and unit tests for reducing the battery" />
@@ -453,10 +461,11 @@
     <MESSAGE value="adding the ability to add to the same xml instead of overwrite" />
     <MESSAGE value="updated xml" />
     <MESSAGE value="adding plot back from the interim tag for more visual testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding plot back from the interim tag for more visual testing" />
+    <MESSAGE value="refactoring rooms to be partitions" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring rooms to be partitions" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Final_year_project$pytest_all_in_test_plan.coverage" NAME="pytest all in test_plan Coverage Results" MODIFIED="1647951180250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Final_year_project$pytest_all_in_test_plan.coverage" NAME="pytest all in test_plan Coverage Results" MODIFIED="1648130995077" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Final_year_project$.coverage" NAME=" Coverage Results" MODIFIED="1646954416048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/tests" />
     <SUITE FILE_PATH="coverage/Final_year_project$pytest_all_in_test_drone_object.coverage" NAME="pytest all in test_drone_object Coverage Results" MODIFIED="1646960135053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Final_year_project$plot.coverage" NAME="plot Coverage Results" MODIFIED="1647953539213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/code" />
