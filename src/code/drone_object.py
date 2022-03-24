@@ -267,24 +267,6 @@ class Drone:
             else:
                 print("Invalid action in plan: ", action[0])  # could create my own exception for this
 
-    def get_x(self):
-        return self.x
-
-    def get_y(self):
-        return self.y
-
-    def get_z(self):
-        return self.z
-
-    def get_roll(self):
-        return self.roll
-
-    def get_pitch(self):
-        return self.pitch
-
-    def get_theta(self):
-        return self.theta
-
 
 test_drone = Drone("Parrot", 10)
 test_plan = Plan([[5, 2, 3.2, 4]], 0.7, False)
