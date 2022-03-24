@@ -10,10 +10,18 @@
   </row>
   <row>
     <TimeOfCreation>23/03/2022 15:39:17</TimeOfCreation>
-    <CompletionTime>23/03/2022 15:39:17</CompletionTime>
+    <CompletionTime>23/03/2022 15:50:17</CompletionTime>
     <Partitions>[4, 3, 0, 0],[2, 8, 4, 2]</Partitions>
     <SequenceOfActions>['take_off'],['move_to', 2.0, 1.5],['ess', 4, 3],['move_to', 5.0, 6.0],['ess', 2, 8],['land']</SequenceOfActions>
     <BatteryOnCompletion>47.5</BatteryOnCompletion>
+    <Found>True</Found>
+  </row>
+  <row>
+    <TimeOfCreation>24/03/2022 14:21:15</TimeOfCreation>
+    <CompletionTime>24/03/2022 14:25:14</CompletionTime>
+    <Partitions>[5, 2, 3.2, 4]</Partitions>
+    <SequenceOfActions>['take_off'],['move_to', 5.7, 5.0],['ss', 5, 2],['land']</SequenceOfActions>
+    <BatteryOnCompletion>59.7</BatteryOnCompletion>
     <Found>True</Found>
   </row>
 </data>
