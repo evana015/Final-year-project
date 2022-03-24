@@ -24,22 +24,22 @@ def reduce_battery(action, boundary_x=1, boundary_y=1):
 class Plan:
 
     def __init__(self, partitions, probability, in_flight):
-        self.partitions = partitions
-        self.probability = probability
-        self.battery = 100
-        self.in_flight = in_flight
-        self.found = False
-        self.actions = []
-        self.time_of_creation = None
+        self.__partitions = partitions
+        self.__probability = probability
+        self.__battery = 100
+        self.__in_flight = in_flight
+        self.__found = False
+        self.__actions = []
+        self.__time_of_creation = None
 
     # randomise a float between 0 to 1 to 1 dp
     # if random number is between 0 and self.probability then found
     # if not self.probability += 0.1
     def determine_found(self):
-        if random.random() <= self.probability:
+        if random.random() <= self.__probability:
             return True
         else:
-            self.probability += 0.1  # increase probability if room has been explored but target not been found
+            self.__probability += 0.1  # increase probability if room has been explored but target not been found
             return False
 
     # Using a set of conditionals determine the ideal pattern for the current room Actions are returned to
@@ -49,7 +49,7 @@ class Plan:
     def populate_actions(self, boundary_x, boundary_y, move_to_x, move_to_y):
         area_of_room = boundary_x * boundary_y
         if area_of_room >= 35:  # determining if a room is of a large size using 35m^2 as the indicator of a large room
-            if self.probability < 0.5:
+            if self.__probability < 0.5:
                 action = "ps"
                 contextual_move_to_x = move_to_x
                 contextual_move_to_y = move_to_y + boundary_y
@@ -58,7 +58,7 @@ class Plan:
                 contextual_move_to_x = move_to_x
                 contextual_move_to_y = move_to_y
         else:
-            if self.probability < 0.5:
+            if self.__probability < 0.5:
                 action = "ess"
                 contextual_move_to_x = move_to_x + (boundary_x / 2)
                 contextual_move_to_y = move_to_y + (boundary_y / 2)
@@ -68,48 +68,76 @@ class Plan:
                 contextual_move_to_y = move_to_y + (boundary_y / 2)
         movement_reduction = reduce_battery("move_to", contextual_move_to_x, contextual_move_to_y)
         reduction = reduce_battery(action, boundary_x, boundary_y) + movement_reduction
-        if self.battery - reduction <= 5:
+        if self.__battery - reduction <= 5:
             return "land", None, None
         else:
-            self.battery -= reduction
+            self.__battery -= reduction
             return action, contextual_move_to_x, contextual_move_to_y
 
     # go through room by room until found or exhausted
-    # partitions have the format [[boundary_x, boundary_y, room_starting_x, room_starting_y] ...]
+    # partitions have the format [[boundary_x, boundary_y, partition_starting_x, partition_starting_y] ...]
     def create_plan(self):
-        self.time_of_creation = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        if not self.in_flight:
-            if self.battery >= 10:
-                self.battery -= reduce_battery("take_off")
-                self.in_flight = True
-                self.actions.append(["take_off"])
+        self.__time_of_creation = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        if not self.__in_flight:
+            if self.__battery >= 10:
+                self.__battery -= reduce_battery("take_off")
+                self.__in_flight = True
+                self.__actions.append(["take_off"])
             else:
-                self.actions.append(["not enough battery to safely take off and land"])
+                self.__actions.append(["not enough __battery to safely take off and land"])
 
-        for partition in self.partitions:
-            action, contextual_x, contextual_y = self.populate_actions(partition[0], partition[1], partition[2], partition[3])
+        for partition in self.__partitions:
+            action, contextual_x, contextual_y = self.populate_actions(partition[0], partition[1], partition[2],
+                                                                       partition[3])
             if action == "land":
                 break
             elif self.determine_found():
-                self.actions.append(["move_to", contextual_x, contextual_y])
-                self.actions.append([action, partition[0], partition[1]])
-                self.found = True
+                self.__actions.append(["move_to", contextual_x, contextual_y])
+                self.__actions.append([action, partition[0], partition[1]])
+                self.__found = True
                 break
             else:
-                self.actions.append(["move_to", contextual_x, contextual_y])
-                self.actions.append([action, partition[0], partition[1]])
+                self.__actions.append(["move_to", contextual_x, contextual_y])
+                self.__actions.append([action, partition[0], partition[1]])
 
-        self.actions.append(["land"])
-        self.battery -= reduce_battery("land")
-        self.in_flight = False
+        self.__actions.append(["land"])
+        self.__battery -= reduce_battery("land")
+        self.__in_flight = False
 
     def export_plan(self):
         df = pd.read_xml(r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans")
-        df.loc[len(df.index)] = [self.time_of_creation, datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                                 ",".join(str(partition) for partition in self.partitions),
-                                 ",".join(str(action) for action in self.actions),
-                                 self.battery, self.found]
+        df.loc[len(df.index)] = [self.__time_of_creation, datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+                                 ",".join(str(partition) for partition in self.__partitions),
+                                 ",".join(str(action) for action in self.__actions),
+                                 self.__battery, self.__found]
         df.to_xml(path_or_buffer=r"/home/evana/catkin_ws/src/Final-year-project/src/exported plans/Plans", index=False)
 
+    # self.__partitions = partitions
+    # self.__probability = probability
+    # self.__battery = 100
+    # self.__in_flight = in_flight
+    # self.__found = False
+    # self.__actions = []
+    # self.__time_of_creation = None
+
+    def get_partitions(self):
+        return self.__partitions
+
+    def get_probability(self):
+        return self.__probability
+
+    def get_battery(self):
+        return self.__battery
+
+    def get_in_flight(self):
+        return self.__in_flight
+
+    def get_found(self):
+        return self.__found
+
     def get_actions(self):
-        return self.actions
+        return self.__actions
+
+    def get_time_of_creation(self):
+        return self.__time_of_creation
+
