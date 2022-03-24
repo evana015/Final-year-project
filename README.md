@@ -32,7 +32,7 @@ Follow terminal outputs.
 ```
 
 ## Related Diagrams
-![Uml diagram](./img/FYP_UML.png)
+![Uml diagram](./img/FYP_UML.jpg)
 ![ROS topics](./img/rosgraph.png)
 Ros topics diagram is provided by @NovoG93
 ## Acknowledgement
