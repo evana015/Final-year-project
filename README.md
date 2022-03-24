@@ -32,9 +32,10 @@ Follow terminal outputs.
 ```
 
 ## Related Diagrams
+UML diagram of code found in /src:
 ![Uml diagram](./img/FYP_UML.jpg)
+Ros topics diagram is provided by @NovoG93:
 ![ROS topics](./img/rosgraph.png)
-Ros topics diagram is provided by @NovoG93
 ## Acknowledgement
 Credit to those that provided the original code base including all files that are written in C++ and CMake:
 @NovoG93 (https://github.com/NovoG93) - updating the codebase to be compatible with ROS Noetic and Gazebo 11
