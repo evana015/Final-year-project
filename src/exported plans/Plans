@@ -24,4 +24,12 @@
     <BatteryOnCompletion>59.7</BatteryOnCompletion>
     <Found>True</Found>
   </row>
+  <row>
+    <TimeOfCreation>24/03/2022 18:36:52</TimeOfCreation>
+    <CompletionTime>24/03/2022 18:39:20</CompletionTime>
+    <Partitions>[2, 3, 0, 0],[5, 5, 2, 1]</Partitions>
+    <SequenceOfActions>['take_off'],['move_to', 1.0, 1.5],['ess', 2, 3],['land']</SequenceOfActions>
+    <BatteryOnCompletion>81.5</BatteryOnCompletion>
+    <Found>True</Found>
+  </row>
 </data>
