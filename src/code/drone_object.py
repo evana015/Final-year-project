@@ -277,7 +277,8 @@ def main():
     drone = Drone("Parrot", 10)
     partitions = []
     for i in range(0, number_of_partitions):
-        parameters = input("Please input the dimensions of the room and the co-ordinate of the lower left corner in"
+        print("Partition " + i)
+        parameters = input("Please input the dimensions of the partition and the co-ordinate of the lower left corner in"
                            " the format width,length,x,y: ")
         partitions.append([int(n) for n in parameters.split(",")])
     probability = float(input("Please enter the probability of the object being found between 0 (unlikely) and 1 ("
