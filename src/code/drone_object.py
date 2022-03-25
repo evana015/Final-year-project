@@ -267,25 +267,36 @@ class Drone:
             else:
                 print("Invalid action in plan: ", action[0])  # could create my own exception for this
 
-    def get_x(self):
-        return self.x
 
-    def get_y(self):
-        return self.y
+def main():
+    try:
+        number_of_partitions = int(input("Please provide the amount of partitions this plan will cover: "))
+    except ValueError:
+        print("Invalid input")
+        main()
+    drone = Drone("Parrot", 10)
+    partitions = []
+    for i in range(0, number_of_partitions):
+        parameters = input("Please input the dimensions of the room and the co-ordinate of the lower left corner in"
+                           " the format width,length,x,y: ")
+        partitions.append([int(n) for n in parameters.split(",")])
+    probability = float(input("Please enter the probability of the object being found between 0 (unlikely) and 1 ("
+                              "likely): "))
+    in_flight = input("Is the drone currently in flight? [y/n] ").lower()
+    if in_flight == "y":
+        in_flight = True
+    else:
+        in_flight = False
+    export = input("Finally the plan exported to the XML? [y/n] ").lower()
+    if export == "y":
+        export = True
+    else:
+        export = False
+    test_plan = Plan(partitions, probability, in_flight)
+    drone.plan_interpreter(test_plan)
+    if export:
+        test_plan.export_plan()
 
-    def get_z(self):
-        return self.z
 
-    def get_roll(self):
-        return self.roll
-
-    def get_pitch(self):
-        return self.pitch
-
-    def get_theta(self):
-        return self.theta
-
-
-test_drone = Drone("Parrot", 10)
-test_plan = new_plan = Plan([[1, 1, 1, 1]], 0.2, False)
-test_drone.plan_interpreter(new_plan)
+if __name__ == "__main__":
+    main()
